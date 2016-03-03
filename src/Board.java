@@ -35,39 +35,49 @@ public class Board {
                 intarr.add(id);
                 tile_list.add(t);
                 id++;
+                System.out.println("=========");
+                System.out.println("x: " + t.x_cor);
+                System.out.println("y: " + t.y_cor);
             }
-            for(int y = 1;y >= y_size/2; y++){
+            System.out.println("first loop done");
+            for(int y = 1;y <= y_size/2; y++){
                 ArrayList<Integer> intarr=  new ArrayList<Integer>();
                 Tile t= new Tile(x,y,"empty",intarr);
                 intarr.add(id);
                 tile_list.add(t);
                 id++;
+                System.out.println("=========");
+                System.out.println("x: " + t.x_cor);
+                System.out.println("y: " + t.y_cor);
             }
+            System.out.println("second loop done");
         }
-        int variable_x_size = x_size;
-        int variable_y_size = (y_size/2) -1;
-        for(int x = x_size/2; x <= x_size; x++){
+        int variable_x_size = x_size/2 + 1;
+        int variable_y_size = (y_size/2 - 1);
+        for(int x = variable_x_size; x <= x_size; x++){
             for(int y = 0;y >= -variable_y_size; y--){
                 ArrayList<Integer> intarr=  new ArrayList<Integer>();
                 Tile t= new Tile(x,y,"empty",intarr);
                 intarr.add(id);
                 tile_list.add(t);
                 id++;
+                System.out.println("=========");
+                System.out.println("x: " + t.x_cor);
+                System.out.println("y: " + t.y_cor);
             }
+            System.out.println("first loop done");
             for(int y = 1;y <= variable_y_size; y++){
                 ArrayList<Integer> intarr=  new ArrayList<Integer>();
                 Tile t= new Tile(x,y,"empty",intarr);
                 intarr.add(id);
                 tile_list.add(t);
                 id++;
+                System.out.println("=========");
+                System.out.println("x: " + t.x_cor);
+                System.out.println("y: " + t.y_cor);
             }
             variable_y_size--;
-        }
-        for(Tile t: tile_list){
-            System.out.println("===========");
-            System.out.println(t.x_cor);
-            System.out.println(t.y_cor);
-            System.out.println("===========");
+            System.out.println("second loop done");
         }
         System.out.println(id);
     }  
