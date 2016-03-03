@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"int",
+				"intarr"
+			],
+			[
+				"y",
+				"y_size_in"
+			],
+			[
+				"x_",
+				"x_size_in"
+			],
+			[
+				"neigh",
+				"neighbour_in"
+			],
+			[
 				"f",
 				"for	For Loop"
 			],
@@ -44,24 +60,31 @@
 	"buffers":
 	[
 		{
-			"file": "Makefile",
+			"file": "src/Board.java",
 			"settings":
 			{
-				"buffer_size": 980,
+				"buffer_size": 1215,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "public class Bicycle {\n        \n    // the Bicycle class has\n    // three fields\n    public int cadence;\n    public int gear;\n    public int speed;\n        \n    // the Bicycle class has\n    // one constructor\n    public Bicycle(int startCadence, int startSpeed, int startGear) {\n        gear = startGear;\n        cadence = startCadence;\n        speed = startSpeed;\n    }\n        \n    // the Bicycle class has\n    // four methods\n    public void setCadence(int newValue) {\n        cadence = newValue;\n    }\n        \n    public void setGear(int newValue) {\n        gear = newValue;\n    }\n        \n    public void applyBrake(int decrement) {\n        speed -= decrement;\n    }\n        \n    public void speedUp(int increment) {\n        speed += increment;\n    }\n        \n}\n",
+			"file": "src/Tile.java",
 			"settings":
 			{
-				"buffer_size": 768,
-				"line_ending": "Unix",
-				"name": "public class Bicycle {"
+				"buffer_size": 466,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/Main.java",
+			"settings":
+			{
+				"buffer_size": 314,
+				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "",
+	"build_system": "Packages/Java/JavaC.sublime-build",
 	"command_palette":
 	{
 		"height": 0.0,
@@ -191,15 +214,43 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Makefile",
+					"file": "src/Board.java",
 					"settings":
 					{
-						"buffer_size": 980,
+						"buffer_size": 1215,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								862,
+								862
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/Tile.java",
+					"settings":
+					{
+						"buffer_size": 466,
 						"regions":
 						{
 						},
@@ -212,7 +263,9 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -221,26 +274,24 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
+					"buffer": 2,
+					"file": "src/Main.java",
 					"settings":
 					{
-						"buffer_size": 768,
+						"buffer_size": 314,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								768,
-								768
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"auto_name": "public class Bicycle {",
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Java/Java.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -282,6 +333,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 231.0
+	},
 	"replace":
 	{
 		"height": 0.0
