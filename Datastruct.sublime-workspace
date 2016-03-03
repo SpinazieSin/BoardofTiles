@@ -1,0 +1,312 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"f",
+				"for	For Loop"
+			],
+			[
+				"get",
+				"get_vec_start"
+			],
+			[
+				"vec",
+				"vec_length"
+			],
+			[
+				"accum",
+				"accum0"
+			],
+			[
+				"fo",
+				"forv	Vector For Loop"
+			],
+			[
+				"for",
+				"for	For Loop"
+			],
+			[
+				"p",
+				"p"
+			],
+			[
+				"k",
+				"k"
+			],
+			[
+				"def",
+				"define"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 980,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "public class Bicycle {\n        \n    // the Bicycle class has\n    // three fields\n    public int cadence;\n    public int gear;\n    public int speed;\n        \n    // the Bicycle class has\n    // one constructor\n    public Bicycle(int startCadence, int startSpeed, int startGear) {\n        gear = startGear;\n        cadence = startCadence;\n        speed = startSpeed;\n    }\n        \n    // the Bicycle class has\n    // four methods\n    public void setCadence(int newValue) {\n        cadence = newValue;\n    }\n        \n    public void setGear(int newValue) {\n        gear = newValue;\n    }\n        \n    public void applyBrake(int decrement) {\n        speed -= decrement;\n    }\n        \n    public void speedUp(int increment) {\n        speed += increment;\n    }\n        \n}\n",
+			"settings":
+			{
+				"buffer_size": 768,
+				"line_ending": "Unix",
+				"name": "public class Bicycle {"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/jonathan/Studie/Datastruct/data-structures.sublime-project",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/InclList",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Platform/File.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Platform/BHAssert.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/ArmKeyFrameEngine.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/ArmKeyFrameEngine.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/ArmKeyFrameMotion.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/CalibrationStand.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/CalibrationStand.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/GetUpEngine.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/GetUpEngine.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/HeadMotionEngine.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/HeadMotionEngine.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/MotionCombinator.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/MotionCombinator.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/MotionSelector.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/MotionSelector.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/SpecialActions.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/SpecialActions.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngineParameters.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngineParameters.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngineData.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngineData.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngine.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/KickEngine/KickEngine.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngineTools.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngineTools.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngineKicks.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngineKicks.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngine.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/WalkingEngine.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/StandBodyRotationProvider.cpp",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/WalkingEngine/StandBodyRotationProvider.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/Modeling/WhistleRecognizer/DefaultWhistle.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/Modeling/WhistleRecognizer/WhistleRecognizer.h",
+		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/Modeling/WhistleRecognizer/WhistleRecognizer.cpp",
+		"/home/jonathan/nao_stuff/# autoload.ini",
+		"/home/jonathan/nao_stuff/noaIPs.txt",
+		"/home/jonathan/nao_stuff/DNT_qualification/motions.py",
+		"/home/jonathan/Nao stuff/noaIPs.txt",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/combine.h",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/combine.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/pbenchmark.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/poly.h",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/poly.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/include/csapp.h",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/include/cpe.h",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/include/clock.h",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/main.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/results/dpb-machine-O1-64.txt",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/benchmark.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/simdlab/Makefile",
+		"/home/jonathan/Studie/Computersystemen/Deel_2/simdlab/combine.c",
+		"/home/jonathan/Dropbox/Gamestuff/nietGamestuff/cachelab-handout/trans.c",
+		"/home/jonathan/Studie/Computersystemen/Deel_2/cachelab-handout/trans.c",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/udpformat.txt",
+		"/home/jonathan/Documents/repos/dn-droneshow/models/mocap.js",
+		"/home/jonathan/Documents/repos/dn-droneshow/index.js",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/datasample.txt",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/broadcast_test.js",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/bind_test.js",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/send.js",
+		"/home/jonathan/Documents/repos/dn-droneshow/models/control.js",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/unpack.js",
+		"/home/jonathan/Documents/repos/optitrack-nodejs/bla.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"NUM_OF",
+			"vec_ptr",
+			"get_vec",
+			"OP",
+			"simd_v8a_combine",
+			"get_vec_start",
+			":146"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 980,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"settings":
+					{
+						"buffer_size": 768,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								768,
+								768
+							]
+						],
+						"settings":
+						{
+							"auto_name": "public class Bicycle {",
+							"syntax": "Packages/Java/Java.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": false,
+	"side_bar_width": 50.0,
+	"status_bar_visible": true
+}
