@@ -3,82 +3,102 @@ import java.util.*;
 public class Board {
         
     public ArrayList<Tile> tile_list;
-    public int x_size;
-    public int y_size;
+    public int x_max;
+    public int y_max;
+    public int y_min;
         
     // the Tile class
     // one constructor
-    public Board(int x_size_in, int y_size_in) {
+    public Board(int x_max_in, int y_max_in, int y_min_in) {
         tile_list = new ArrayList<Tile>();
-        x_size = x_size_in;
-        y_size = y_size_in;
+        x_max = x_max_in;
+        y_max = y_max_in;
+        y_min = y_min_in;
         int id = 0;
-        // for(int i = 1;i <= y_size/2; i++){
-        //     ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //     intarr.add(id);
-        //     Tile t= new Tile(0,i,"empty",intarr);
-        //     tile_list.add(t);
-        //     id++;
 
-        // }
-        // for(int i = 0;i >= -y_size/2; i--){
-        //     ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //     Tile t= new Tile(0,i,"empty",intarr);
-        //     intarr.add(id);
-        //     tile_list.add(t);
-        //     id++;
-        // }
-        for(int x = 0; x <= x_size/2; x++){
-            for(int y = 0;y >= -y_size/2; y--){
-                ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                Tile t= new Tile(x,y,"empty",intarr);
-                intarr.add(id);
-                tile_list.add(t);
-                id++;
-                System.out.println("=========");
-                System.out.println("x: " + t.x_cor);
-                System.out.println("y: " + t.y_cor);
-            }
-            System.out.println("first loop done");
-            for(int y = 1;y <= y_size/2; y++){
-                ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                Tile t= new Tile(x,y,"empty",intarr);
-                intarr.add(id);
-                tile_list.add(t);
-                id++;
-                System.out.println("=========");
-                System.out.println("x: " + t.x_cor);
-                System.out.println("y: " + t.y_cor);
-            }
-            System.out.println("second loop done");
+
+        // Create middle line
+        for (int x = 0; x <= x_max; x++) {
+            ArrayList<Integer> intarr=  new ArrayList<Integer>();
+            Tile t= new Tile(x,0,"empty",intarr);
+            intarr.add(id);
+            tile_list.add(t);
+            id++;
         }
-        int variable_x_size = x_size/2 + 1;
-        int variable_y_size = (y_size/2 - 1);
-        for(int x = variable_x_size; x <= x_size; x++){
-            for(int y = 0;y >= -variable_y_size; y--){
-                ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                Tile t= new Tile(x,y,"empty",intarr);
-                intarr.add(id);
-                tile_list.add(t);
-                id++;
-                System.out.println("=========");
-                System.out.println("x: " + t.x_cor);
-                System.out.println("y: " + t.y_cor);
+        for (int x_offset = 0; x_offset < x_max; x_offset++) {
+            // Create top of the board
+            if (x_offset <= x_max-y_max){
+                for(int y_offset = 1; y_offset <= y_max; y_offset++){
+                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
+                    Tile t= new Tile(x_offset, y_offset,"empty",intarr);
+                    intarr.add(id);
+                    tile_list.add(t);
+                    id++;
+                }
+            } else {
+                for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
+                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
+                    Tile t= new Tile(x_offset, y_offset,"empty",intarr);
+                    intarr.add(id);
+                    tile_list.add(t);
+                    id++;
+                }
             }
-            System.out.println("first loop done");
-            for(int y = 1;y <= variable_y_size; y++){
-                ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                Tile t= new Tile(x,y,"empty",intarr);
-                intarr.add(id);
-                tile_list.add(t);
-                id++;
-                System.out.println("=========");
-                System.out.println("x: " + t.x_cor);
-                System.out.println("y: " + t.y_cor);
+            // Create bottom of the board
+            if (x_offset <= x_max+y_min){
+                for(int y_offset = 1; y_offset <= -y_min; y_offset++){
+                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
+                    Tile t= new Tile(x_offset, -y_offset,"empty",intarr);
+                    intarr.add(id);
+                    tile_list.add(t);
+                    id++;
+                }
+            } else {
+                for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
+                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
+                    Tile t= new Tile(x_offset, -y_offset,"empty",intarr);
+                    intarr.add(id);
+                    tile_list.add(t);
+                    id++;
+                }
             }
-            variable_y_size--;
-            System.out.println("second loop done");
         }
+        // // Create square
+        // for(int x = 0; x <= x_max/2; x++){
+        //     for(int y = 0;y >= -y_max; y--){
+        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
+        //         Tile t= new Tile(x,y,"empty",intarr);
+        //         intarr.add(id);
+        //         tile_list.add(t);
+        //         id++;
+        //     }
+        //     for(int y = 1;y <= y_min; y++){
+        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
+        //         Tile t= new Tile(x,y,"empty",intarr);
+        //         intarr.add(id);
+        //         tile_list.add(t);
+        //         id++;
+        //     }
+        // }
+        // // Create triangle point
+        // for(int x_offset = x_max-1; x_offset <= x_max-y_max; x++){
+        //     // Create bottom half
+        //     for(int y_offset = 0;y >= y_min+x_offset; y--){
+        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
+        //         Tile t= new Tile(x,y,"empty",intarr);
+        //         intarr.add(id);
+        //         tile_list.add(t);
+        //         id++;
+        //     }
+        //     // Create top half
+        //     for(int y_offset = 1;y <= y_max-x_offset; y++){
+        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
+        //         Tile t= new Tile(x,y,"empty",intarr);
+        //         intarr.add(id);
+        //         tile_list.add(t);
+        //         id++;
+        //     }
+        // }
         System.out.println(id);
     }  
 }

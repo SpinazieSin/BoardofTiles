@@ -4,22 +4,6 @@
 		"selected_items":
 		[
 			[
-				"int",
-				"intarr"
-			],
-			[
-				"y",
-				"y_size_in"
-			],
-			[
-				"x_",
-				"x_size_in"
-			],
-			[
-				"neigh",
-				"neighbour_in"
-			],
-			[
 				"f",
 				"for	For Loop"
 			],
@@ -63,15 +47,7 @@
 			"file": "src/Board.java",
 			"settings":
 			{
-				"buffer_size": 1215,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/Tile.java",
-			"settings":
-			{
-				"buffer_size": 466,
+				"buffer_size": 1715,
 				"line_ending": "Unix"
 			}
 		},
@@ -82,12 +58,25 @@
 				"buffer_size": 314,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "src/Tile.java",
+			"settings":
+			{
+				"buffer_size": 466,
+				"line_ending": "Unix"
+			}
 		}
 	],
-	"build_system": "Packages/Java/JavaC.sublime-build",
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -95,7 +84,11 @@
 	},
 	"console":
 	{
-		"height": 0.0
+		"height": 0.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
 	},
 	"distraction_free":
 	{
@@ -108,6 +101,10 @@
 	},
 	"file_history":
 	[
+		"/home/bakeraid/Programming/Git/BoardofTiles/src/Tile.java",
+		"/home/bakeraid/Programming/Git/BoardofTiles/src/Main.java",
+		"/home/bakeraid/Programming/Git/BoardofTiles/src/Board.java",
+		"/home/bakeraid/Programming/Git/BoardofTiles/Makefile",
 		"/home/jonathan/Studie/Datastruct/data-structures.sublime-project",
 		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/InclList",
 		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Platform/File.h",
@@ -190,6 +187,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"x_size",
+			"y_size",
 			"NUM_OF",
 			"vec_ptr",
 			"get_vec",
@@ -220,22 +219,23 @@
 				{
 					"buffer": 0,
 					"file": "src/Board.java",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1215,
+						"buffer_size": 1715,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								862,
-								862
+								877,
+								877
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage",
+							"syntax": "Packages/Java/Java.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
@@ -243,39 +243,13 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/Tile.java",
-					"settings":
-					{
-						"buffer_size": 466,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/Java.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "src/Main.java",
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 314,
@@ -285,18 +259,49 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								111,
+								111
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.tmLanguage"
+							"syntax": "Packages/Java/Java.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/Tile.java",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 466,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/Java.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -335,8 +340,14 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 231.0
+		"height": 201.0
 	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/Java/JavaC.sublime-build",
+	"project": "Datastruct.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -345,6 +356,7 @@
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -353,15 +365,32 @@
 	"select_project":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
 		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": false,
 	"side_bar_width": 50.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
