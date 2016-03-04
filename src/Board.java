@@ -16,12 +16,11 @@ public class Board {
         y_min = y_min_in;
         int id = 0;
 
-
+        int[] placeholder_unit = {0,0,0};
         // Create middle line
         for (int x = 0; x <= x_max; x++) {
-            ArrayList<Integer> intarr=  new ArrayList<Integer>();
-            Tile t= new Tile(x,0,"empty",intarr);
-            intarr.add(id);
+            ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
+            Tile t= new Tile(x, 0, placeholder_unit, intarr);
             tile_list.add(t);
             id++;
         }
@@ -29,17 +28,15 @@ public class Board {
             // Create top of the board
             if (x_offset <= x_max-y_max){
                 for(int y_offset = 1; y_offset <= y_max; y_offset++){
-                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                    Tile t= new Tile(x_offset, y_offset,"empty",intarr);
-                    intarr.add(id);
+                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(x_offset, y_offset, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
             } else {
                 for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
-                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                    Tile t= new Tile(x_offset, y_offset,"empty",intarr);
-                    intarr.add(id);
+                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(x_offset, y_offset, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
@@ -47,58 +44,49 @@ public class Board {
             // Create bottom of the board
             if (x_offset <= x_max+y_min){
                 for(int y_offset = 1; y_offset <= -y_min; y_offset++){
-                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                    Tile t= new Tile(x_offset, -y_offset,"empty",intarr);
-                    intarr.add(id);
+                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(x_offset, -y_offset, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
             } else {
                 for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
-                    ArrayList<Integer> intarr=  new ArrayList<Integer>();
-                    Tile t= new Tile(x_offset, -y_offset,"empty",intarr);
-                    intarr.add(id);
+                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(x_offset, -y_offset, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
             }
         }
-        // // Create square
-        // for(int x = 0; x <= x_max/2; x++){
-        //     for(int y = 0;y >= -y_max; y--){
-        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //         Tile t= new Tile(x,y,"empty",intarr);
-        //         intarr.add(id);
-        //         tile_list.add(t);
-        //         id++;
-        //     }
-        //     for(int y = 1;y <= y_min; y++){
-        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //         Tile t= new Tile(x,y,"empty",intarr);
-        //         intarr.add(id);
-        //         tile_list.add(t);
-        //         id++;
-        //     }
-        // }
-        // // Create triangle point
-        // for(int x_offset = x_max-1; x_offset <= x_max-y_max; x++){
-        //     // Create bottom half
-        //     for(int y_offset = 0;y >= y_min+x_offset; y--){
-        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //         Tile t= new Tile(x,y,"empty",intarr);
-        //         intarr.add(id);
-        //         tile_list.add(t);
-        //         id++;
-        //     }
-        //     // Create top half
-        //     for(int y_offset = 1;y <= y_max-x_offset; y++){
-        //         ArrayList<Integer> intarr=  new ArrayList<Integer>();
-        //         Tile t= new Tile(x,y,"empty",intarr);
-        //         intarr.add(id);
-        //         tile_list.add(t);
-        //         id++;
-        //     }
-        // }
+
+        // Loop over previous array to create a final list of all the tiles
+        int tile_list_size = tile_list.size();
+        Tile[] final_tile_list = new Tile[tile_list_size];
+        for (int tile_count = 0; tile_count < tile_list_size; tile_count++) {
+            Tile tile = tile_list.get(tile_count);
+            // Find all neighbours to the tile
+            ArrayList<Integer[]> neighbour_list = new ArrayList<Integer[]>();
+            for (int neighbour_count = 0; neighbour_count < tile_list_size; neighbour_count++) {
+                if (tile.x_cor == tile_list.get(neighbour_count).x_cor-1 && tile.y_cor == tile_list.get(neighbour_count).y_cor ||
+                    tile.x_cor == tile_list.get(neighbour_count).x_cor-1 && tile.y_cor == tile_list.get(neighbour_count).y_cor + 1 ||
+                    tile.x_cor == tile_list.get(neighbour_count).x_cor + 1 && tile.y_cor == tile_list.get(neighbour_count).y_cor - 1 ||
+                    tile.x_cor == tile_list.get(neighbour_count).x_cor + 1 && tile.y_cor == tile_list.get(neighbour_count).y_cor ||
+                    tile.x_cor == tile_list.get(neighbour_count).x_cor && tile.y_cor == tile_list.get(neighbour_count).y_cor -1||
+                    tile.x_cor == tile_list.get(neighbour_count).x_cor && tile.y_cor == tile_list.get(neighbour_count).y_cor +1) {
+                    Integer[] neighbour_cor = {tile_list.get(neighbour_count).x_cor, tile_list.get(neighbour_count).y_cor};
+                    neighbour_list.add(neighbour_cor);
+                }
+            }
+            Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
+            final_tile_list[tile_count] = final_tile;
+        }
+        int size = final_tile_list[7].neighbours.size();
+        int x = final_tile_list[7].x_cor;
+        int y = final_tile_list[7].y_cor;
         System.out.println(id);
+        System.out.println("--------------");
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(size);
     }  
 }

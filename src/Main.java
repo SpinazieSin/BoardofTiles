@@ -13,4 +13,3 @@ public class Main {
         Board board = new Board(x_max,y_max,y_min);
     }
 }
-

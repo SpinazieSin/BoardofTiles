@@ -3,25 +3,25 @@ Tiles are represented as objects with x-y coordinates
 x y represent int coordinates on a 2-dimensional vector plane
 
 UNIT REPRESENTATION-
-Swordsman (0):
+Swordsman (1):
 -Hitpoints = 4
 -Weapon Skill = 6
-[0, 4, 6]
+[1, 4, 6]
 
-General (1):
+General (2):
 -Hitpoints = 5
 -Weapon Skill = 8
-[1, 5, 8]
+[2, 5, 8]
 
-Goblin (2):
+Goblin (3):
 -Hitpoints = 3
 -Weapon Skill = 4
-[2, 3, 4]
+[3, 3, 4]
 
-Orc (3):
+Orc (4daat):
 -Hitpoints = 10
 -Weapon Skill = 8
-[2, 3, 4]
+[4, 10, 8]
 
 BOARD-
 2-dimensional vector plane with x and y coordinates
