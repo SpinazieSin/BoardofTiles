@@ -67,26 +67,33 @@ public class Board {
             // Find all neighbours to the tile
             ArrayList<Integer[]> neighbour_list = new ArrayList<Integer[]>();
             for (int neighbour_count = 0; neighbour_count < tile_list_size; neighbour_count++) {
-                if (tile.x_cor == tile_list.get(neighbour_count).x_cor-1 && tile.y_cor == tile_list.get(neighbour_count).y_cor ||
-                    tile.x_cor == tile_list.get(neighbour_count).x_cor-1 && tile.y_cor == tile_list.get(neighbour_count).y_cor + 1 ||
-                    tile.x_cor == tile_list.get(neighbour_count).x_cor + 1 && tile.y_cor == tile_list.get(neighbour_count).y_cor - 1 ||
-                    tile.x_cor == tile_list.get(neighbour_count).x_cor + 1 && tile.y_cor == tile_list.get(neighbour_count).y_cor ||
-                    tile.x_cor == tile_list.get(neighbour_count).x_cor && tile.y_cor == tile_list.get(neighbour_count).y_cor -1||
-                    tile.x_cor == tile_list.get(neighbour_count).x_cor && tile.y_cor == tile_list.get(neighbour_count).y_cor +1) {
-                    Integer[] neighbour_cor = {tile_list.get(neighbour_count).x_cor, tile_list.get(neighbour_count).y_cor};
+                int neighbour_x_cor = tile_list.get(neighbour_count).x_cor;
+                int neighbour_y_cor = tile_list.get(neighbour_count).y_cor;
+                if (tile.x_cor == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
+                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ||
+                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
+                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ) {
+                    Integer[] neighbour_cor = {neighbour_x_cor, neighbour_y_cor};
                     neighbour_list.add(neighbour_cor);
                 }
             }
             Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
             final_tile_list[tile_count] = final_tile;
         }
-        int size = final_tile_list[7].neighbours.size();
-        int x = final_tile_list[7].x_cor;
-        int y = final_tile_list[7].y_cor;
+        // for (int i = 0; i < 9; i++) {
+        //     int size = final_tile_list[i].neighbours.size();
+        //     int x = final_tile_list[i].x_cor;
+        //     int y = final_tile_list[i].y_cor;
+        //     System.out.println("--------------");
+        //     System.out.println(x);
+        //     System.out.println(y);
+        //     System.out.println(size);
+        // }
+        // System.out.println("---=-=-=-=-=-=");
+        // System.out.println(final_tile_list[5].neighbours.get(4)[0]);
+        // System.out.println(final_tile_list[5].neighbours.get(4)[1]);
         System.out.println(id);
-        System.out.println("--------------");
-        System.out.println(x);
-        System.out.println(y);
-        System.out.println(size);
     }  
 }
