@@ -42,8 +42,8 @@ public class Board {
                 }
             }
             // Create bottom of the board
-            if (x_offset <= x_max+y_min){
-                for(int y_offset = 1; y_offset <= -y_min; y_offset++){
+            if (x_offset <= x_max-y_min){
+                for(int y_offset = 1; y_offset <= y_min; y_offset++){
                     ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
                     Tile t= new Tile(x_offset, -y_offset, placeholder_unit, intarr);
                     tile_list.add(t);
@@ -69,11 +69,11 @@ public class Board {
             for (int neighbour_count = 0; neighbour_count < tile_list_size; neighbour_count++) {
                 int neighbour_x_cor = tile_list.get(neighbour_count).x_cor;
                 int neighbour_y_cor = tile_list.get(neighbour_count).y_cor;
-                if (tile.x_cor == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
-                    tile.x_cor == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
+                if (tile.x_cor - 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor == neighbour_x_cor && tile.y_cor -1 == neighbour_y_cor ||
                     tile.x_cor - 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ||
                     tile.x_cor - 1 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
-                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor  == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
                     tile.x_cor + 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ) {
                     Integer[] neighbour_cor = {neighbour_x_cor, neighbour_y_cor};
                     neighbour_list.add(neighbour_cor);
@@ -82,18 +82,6 @@ public class Board {
             Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
             final_tile_list[tile_count] = final_tile;
         }
-        // for (int i = 0; i < 9; i++) {
-        //     int size = final_tile_list[i].neighbours.size();
-        //     int x = final_tile_list[i].x_cor;
-        //     int y = final_tile_list[i].y_cor;
-        //     System.out.println("--------------");
-        //     System.out.println(x);
-        //     System.out.println(y);
-        //     System.out.println(size);
-        // }
-        // System.out.println("---=-=-=-=-=-=");
-        // System.out.println(final_tile_list[5].neighbours.get(4)[0]);
-        // System.out.println(final_tile_list[5].neighbours.get(4)[1]);
         System.out.println(id);
     }  
 }

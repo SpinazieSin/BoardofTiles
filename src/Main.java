@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) {
-        build_board(8, 4, -4);
+        build_board(8, 4, 4);
         for (String s: args) {
             System.out.println(s);
         }	
