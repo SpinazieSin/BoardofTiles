@@ -3,6 +3,7 @@ import java.util.*;
 public class Board {
         
     public ArrayList<Tile> tile_list;
+    public Tile[] final_tile_list;
     public int x_max;
     public int y_max;
     public int y_min;
@@ -61,7 +62,7 @@ public class Board {
 
         // Loop over previous array to create a final list of all the tiles
         int tile_list_size = tile_list.size();
-        Tile[] final_tile_list = new Tile[tile_list_size];
+        final_tile_list = new Tile[tile_list_size];
         for (int tile_count = 0; tile_count < tile_list_size; tile_count++) {
             Tile tile = tile_list.get(tile_count);
             // Find all neighbours to the tile
@@ -83,5 +84,18 @@ public class Board {
             final_tile_list[tile_count] = final_tile;
         }
         System.out.println(id);
+
+        // for(Tile testy : final_tile_list) {
+        //     System.out.println("tile x: " + testy.x_cor);
+        //     System.out.println("tile y: " + testy.y_cor);
+        //     System.out.println("neighbours: ");
+        //     System.out.println("        -------");
+        //     for(Integer[] neighby : testy.neighbours){
+        //         System.out.println("        tile x: " + neighby[0]);
+        //         System.out.println("        tile y: " + neighby[1]);
+        //         System.out.println("        -------");
+        //     }
+        //     System.out.println("=================");
+        // }
     }  
 }
