@@ -18,7 +18,7 @@ public class Main {
     public static void print_board(Board board, int x_max, int y_max, int y_min){
     	int i = 0;
     	while(i <= x_max){
-	    	for(Tile t : board.final_tile_list){
+	    	for(Tile t : board.tiles){
 	    		if(t.y_cor == y_max - i){
 	    			// System.out.print("[" + t.x_cor + "," + t.y_cor + "]");
                     System.out.print("[" + t.unit[0] + "]");
@@ -35,7 +35,7 @@ public class Main {
         int[] goblin = {3, 3, 4};
         int[] general = {2, 5, 8};
         int[] swordsman = {1, 4, 6};
-        for(Tile t : board.final_tile_list){
+        for(Tile t : board.tiles){
             //Initialize Greenskin side
             if(t.x_cor == 8 && t.y_cor == 0) t.unit = orc;
             if(t.x_cor == 3 && t.y_cor == 4) t.unit = orc;
