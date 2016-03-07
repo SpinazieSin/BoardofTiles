@@ -3,7 +3,7 @@ import java.util.*;
 public class Combat {
 
 	// Returns if something hit or not
-	public static Boolean hit(Tile attacker, Tile defender, Tile[] board) {
+	public static Boolean hit(Tile attacker, Tile defender, Tile[][] board) {
 		// new weapons skill is calculated based on adjecent units
 		int attackerSkill = calculateWeaponSkill(attacker, board);
 		int defenderSkill = calculateWeaponSkill(defender, board);
@@ -21,49 +21,39 @@ public class Combat {
 	}
 
 	// Loop over adjecent units to get new weapon skill
-	private static int calculateWeaponSkill(Tile unit, Tile[] board) {
+	private static int calculateWeaponSkill(Tile unit, Tile[][] board) {
 		int weaponSkill = unit.unit[2];
 		for (int neighbourCount = 0; neighbourCount < unit.neighbours.size(); neighbourCount++) {
 			Integer[] neighbour = unit.neighbours.get(neighbourCount);
-			for (int tileCount = 0; tileCount < board.length; tileCount++) {
-				// If the unit is human
-				if (unit.unit[0] == 1 || unit.unit[0] == 2) {
-					// if the tile is a neighbouring tile
-					if (board[tileCount].x_cor == neighbour[0] && 
-						board[tileCount].y_cor == neighbour[1]) {
-						// Swordsman
-						if (board[tileCount].unit[0] == 1) {
-							weaponSkill+=1;
-						// General
-						} else if (board[tileCount].unit[0] == 2) {
-							weaponSkill+=2;
-						// Goblin
-						} else if (board[tileCount].unit[0] == 3) {
-							weaponSkill-=1;
-						// Orc
-						} else if (board[tileCount].unit[0] == 4) {
-							weaponSkill-=2;
-						}
-					}
-				// if the unit is orc
-				} else {
-					// if the tile is a neighbouring tile
-					if (board[tileCount].x_cor == neighbour[0] && 
-						board[tileCount].y_cor == neighbour[1]) {
-						// Swordsman
-						if (board[tileCount].unit[0] == 1) {
-							weaponSkill-=1;
-						// General
-						} else if (board[tileCount].unit[0] == 2) {
-							weaponSkill-=2;
-						// Goblin
-						} else if (board[tileCount].unit[0] == 3) {
-							weaponSkill+=1;
-						// Orc
-						} else if (board[tileCount].unit[0] == 4) {
-							weaponSkill+=2;
-						}
-					}
+			// If the unit is human
+			if (unit.unit[0] == 1 || unit.unit[0] == 2) {
+				// Swordsman
+				if (board[neighbour[0]][neighbour[1]].unit[0] == 1) {
+					weaponSkill+=1;
+				// General
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 2) {
+					weaponSkill+=2;
+				// Goblin
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 3) {
+					weaponSkill-=1;
+				// Orc
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 4) {
+					weaponSkill-=2;
+				}
+			// If the unit is orc
+			} else {
+				// Swordsman
+				if (board[neighbour[0]][neighbour[1]].unit[0] == 1) {
+					weaponSkill-=1;
+				// General
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 2) {
+					weaponSkill-=2;
+				// Goblin
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 3) {
+					weaponSkill+=1;
+				// Orc
+				} else if (board[neighbour[0]][neighbour[1]].unit[0] == 4) {
+					weaponSkill+=2;
 				}
 			}
 		}

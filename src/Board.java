@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Board {
         
-    public Tile[] tiles;
+    public Tile[][] tiles;
     public int x_max;
     public int y_max;
     public int y_min;
@@ -20,7 +20,7 @@ public class Board {
         // Create middle line
         for (int x = 0; x <= x_max; x++) {
             ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-            Tile t= new Tile(x, 0, placeholder_unit, intarr);
+            Tile t= new Tile(x, y_min, placeholder_unit, intarr);
             tile_list.add(t);
             id++;
         }
@@ -29,14 +29,14 @@ public class Board {
             if (x_offset <= x_max-y_max){
                 for(int y_offset = 1; y_offset <= y_max; y_offset++){
                     ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, y_offset, placeholder_unit, intarr);
+                    Tile t= new Tile(x_offset, y_offset+y_min, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
             } else {
                 for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
                     ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, y_offset, placeholder_unit, intarr);
+                    Tile t= new Tile(x_offset, y_offset+y_min, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
@@ -45,14 +45,14 @@ public class Board {
             if (x_offset <= x_max-y_min){
                 for(int y_offset = 1; y_offset <= y_min; y_offset++){
                     ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, -y_offset, placeholder_unit, intarr);
+                    Tile t= new Tile(x_offset, -y_offset+y_min, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
             } else {
                 for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
                     ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, -y_offset, placeholder_unit, intarr);
+                    Tile t= new Tile(x_offset, -y_offset+y_min, placeholder_unit, intarr);
                     tile_list.add(t);
                     id++;
                 }
@@ -61,7 +61,7 @@ public class Board {
 
         // Loop over previous array to create a final list of all the tiles
         int tile_list_size = tile_list.size();
-        tiles = new Tile[tile_list_size];
+        tiles = new Tile[tile_list_size][y_max+y_min+1];
         for (int tile_count = 0; tile_count < tile_list_size; tile_count++) {
             Tile tile = tile_list.get(tile_count);
             // Find all neighbours to the tile
@@ -80,7 +80,7 @@ public class Board {
                 }
             }
             Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
-            tiles[tile_count] = final_tile;
+            tiles[tile.x_cor][tile.y_cor] = final_tile;
         }
         System.out.println(id);
     }
