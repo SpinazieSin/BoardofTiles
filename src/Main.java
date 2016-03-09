@@ -3,31 +3,41 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) {
-        build_board(8, 4, 4);
-        for (String s: args) {
-            System.out.println(s);
-        }	
+        Board board = build_board(8, 4, 4);
+        // Gameloop
+        while (true) {
+            Scanner scan = new Scanner(System.in);
+            try {
+                int x_cor = scan.nextInt();
+                int y_cor = scan.nextInt();
+                System.out.println(x_cor);
+                System.out.println(y_cor);
+            }
+            catch (Exception e) {
+                System.out.println("Bad input, try x and y coordinates seperated by spaces");
+                continue;
+            }
+            print_board(board);
+        }
     }
 
-    public static void build_board(int x_max, int y_max, int y_min){
+    public static Board build_board(int x_max, int y_max, int y_min){
         Board board = new Board(x_max,y_max,y_min);
         init_units(board);
-        print_board(board, x_max, y_max, y_min);
+        return(board);
     }
 
-    public static void print_board(Board board, int x_max, int y_max, int y_min){
-    	int i = 0;
-    	while(i <= x_max){
-	    	for(Tile t : board.tiles){
-	    		if(t.y_cor == y_max - i){
-	    			// System.out.print("[" + t.x_cor + "," + t.y_cor + "]");
-                    System.out.print("[" + t.unit[0] + "]");
-	    			// System.out.print()
-	    		}
-	    	}
-	    	System.out.println();
-	    	i++;
-	    }
+    public static void print_board(Board board){
+		for (int x_offset = 0; x_offset < board.x_max+1; x_offset++) {
+            for (int y_offset = 0; y_offset < board.y_max+board.y_min; y_offset++) {
+                if (board.tiles[x_offset][y_offset] == null) {
+                   continue;
+                } else {
+                    System.out.print(board.tiles[x_offset][y_offset].unit[0]);
+                }
+            }
+            System.out.println();
+    	}
     }
 
     public static void init_units(Board board) {
@@ -35,29 +45,5 @@ public class Main {
         int[] goblin = {3, 3, 4};
         int[] general = {2, 5, 8};
         int[] swordsman = {1, 4, 6};
-        for(Tile t : board.tiles){
-            //Initialize Greenskin side
-            if(t.x_cor == 8 && t.y_cor == 0) t.unit = orc;
-            if(t.x_cor == 3 && t.y_cor == 4) t.unit = orc;
-            if(t.x_cor == 7 && t.y_cor == 0) t.unit = goblin;
-            if(t.x_cor == 7 && t.y_cor == -1) t.unit = goblin;
-            if(t.x_cor == 6 && t.y_cor == -2) t.unit = goblin;
-            if(t.x_cor == 6 && t.y_cor == 1) t.unit = goblin;
-            if(t.x_cor == 5 && t.y_cor == 2) t.unit = goblin;
-            if(t.x_cor == 5 && t.y_cor == 3) t.unit = goblin;
-            if(t.x_cor == 4 && t.y_cor == 3) t.unit = goblin;
-            if(t.x_cor == 3 && t.y_cor == 3) t.unit = goblin;
-
-            // Initialize Human side
-            if(t.x_cor == 0 && t.y_cor == 0) t.unit = general;
-            if(t.x_cor == 0 && t.y_cor == -3) t.unit = general;
-            if(t.x_cor == 1 && t.y_cor == -4) t.unit = general;
-            if(t.x_cor == 0 && t.y_cor == 1) t.unit = swordsman;
-            if(t.x_cor == 0 && t.y_cor == -1) t.unit = swordsman;
-            if(t.x_cor == 1 && t.y_cor == 0) t.unit = swordsman;
-            if(t.x_cor == 1 && t.y_cor == -1) t.unit = swordsman;
-            if(t.x_cor == 1 && t.y_cor == -2) t.unit = swordsman;
-            if(t.x_cor == 1 && t.y_cor == -3) t.unit = swordsman;
-        }
     }
 }
