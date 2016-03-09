@@ -4,6 +4,94 @@
 		"selected_items":
 		[
 			[
+				"if",
+				"ifmain	if __name__ == '__main__'"
+			],
+			[
+				"draw",
+				"drawHex"
+			],
+			[
+				"NEW",
+				"newOrigion"
+			],
+			[
+				"y",
+				"y_cor"
+			],
+			[
+				"x",
+				"x_cor"
+			],
+			[
+				"print",
+				"println"
+			],
+			[
+				"prin",
+				"print_board"
+			],
+			[
+				"final",
+				"final_tile_list"
+			],
+			[
+				"nei",
+				"neighby"
+			],
+			[
+				"int",
+				"Integer"
+			],
+			[
+				"Dr",
+				"DrawPanel"
+			],
+			[
+				"im",
+				"image1"
+			],
+			[
+				"Grap",
+				"Graphics"
+			],
+			[
+				"a",
+				"anotherlabel"
+			],
+			[
+				"ano",
+				"anotherhex"
+			],
+			[
+				"I",
+				"ImageIcon"
+			],
+			[
+				"hex",
+				"hextile"
+			],
+			[
+				"Graphics",
+				"Graphics2D"
+			],
+			[
+				"va",
+				"variable_x_size"
+			],
+			[
+				"pr",
+				"println"
+			],
+			[
+				"x_",
+				"x_size_in"
+			],
+			[
+				"neigh",
+				"neighbour_in"
+			],
+			[
 				"f",
 				"for	For Loop"
 			],
@@ -44,39 +132,50 @@
 	"buffers":
 	[
 		{
-			"file": "src/Board.java",
+			"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/README",
 			"settings":
 			{
-				"buffer_size": 1715,
+				"buffer_size": 1247,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/Main.java",
+			"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/example-binarized-data/train-tiny-h2v2.txt",
 			"settings":
 			{
-				"buffer_size": 314,
+				"buffer_size": 216465,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/Tile.java",
+			"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/example-binarized-data/train-tiny-lossless.txt",
 			"settings":
 			{
-				"buffer_size": 466,
+				"buffer_size": 183711,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/data/train20.txt",
+			"settings":
+			{
+				"buffer_size": 3465295,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		}
 	],
 	"build_system": "",
-	"build_system_choices":
-	[
-	],
-	"build_varint": "",
 	"command_palette":
 	{
 		"height": 0.0,
-		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -84,11 +183,7 @@
 	},
 	"console":
 	{
-		"height": 0.0,
-		"history":
-		[
-			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
-		]
+		"height": 0.0
 	},
 	"distraction_free":
 	{
@@ -101,10 +196,19 @@
 	},
 	"file_history":
 	[
-		"/home/bakeraid/Programming/Git/BoardofTiles/src/Tile.java",
-		"/home/bakeraid/Programming/Git/BoardofTiles/src/Main.java",
-		"/home/bakeraid/Programming/Git/BoardofTiles/src/Board.java",
-		"/home/bakeraid/Programming/Git/BoardofTiles/Makefile",
+		"/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/example-binarized-data/train-tiny-lossless.txt",
+		"/home/jonathan/Studie/BoardofTiles/TestClutterfolder/Hexagon.java",
+		"/home/jonathan/Studie/BoardofTiles/TestClutterfolder/Main.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Units.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Tile.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Board.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Main.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Hexagon.java",
+		"/home/jonathan/Studie/BoardofTiles/src/HexMain.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Unit.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Sprites.java",
+		"/home/jonathan/Studie/BoardofTiles/src/Drawing.java",
+		"/home/jonathan/Studie/BoardofTiles/Datastruct.sublime-project",
 		"/home/jonathan/Studie/Datastruct/data-structures.sublime-project",
 		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Modules/MotionControl/InclList",
 		"/home/jonathan/nao_stuff/BHumanCodeRelease-master/Src/Platform/File.h",
@@ -187,8 +291,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"x_size",
-			"y_size",
+			"final_tile_list",
+			"font",
+			"drawhex",
+			"4",
+			"print",
 			"NUM_OF",
 			"vec_ptr",
 			"get_vec",
@@ -213,95 +320,137 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/Board.java",
-					"semi_transient": false,
+					"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/README",
 					"settings":
 					{
-						"buffer_size": 1715,
+						"buffer_size": 1247,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								877,
-								877
+								545,
+								545
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/Main.java",
-					"semi_transient": false,
+					"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/example-binarized-data/train-tiny-h2v2.txt",
 					"settings":
 					{
-						"buffer_size": 314,
+						"buffer_size": 216465,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								111,
-								111
+								797,
+								797
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "src/Tile.java",
-					"semi_transient": false,
+					"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/example-binarized-data/train-tiny-lossless.txt",
 					"settings":
 					{
-						"buffer_size": 466,
+						"buffer_size": 183711,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19,
-								19
+								1408,
+								1408
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Java/Java.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/jonathan/Studie/NLMI_assigments/assignments-part-b-distr/data/train20.txt",
+					"settings":
+					{
+						"buffer_size": 3465295,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								535,
+								535
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
 					"type": "text"
 				}
 			]
@@ -340,14 +489,8 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 201.0
+		"height": 160.0
 	},
-	"output.find_results":
-	{
-		"height": 0.0
-	},
-	"pinned_build_system": "Packages/Java/JavaC.sublime-build",
-	"project": "Datastruct.sublime-project",
 	"replace":
 	{
 		"height": 0.0
@@ -356,7 +499,6 @@
 	"select_file":
 	{
 		"height": 0.0,
-		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -365,32 +507,15 @@
 	"select_project":
 	{
 		"height": 0.0,
-		"last_filter": "",
 		"selected_items":
 		[
 		],
 		"width": 0.0
-	},
-	"select_symbol":
-	{
-		"height": 0.0,
-		"last_filter": "",
-		"selected_items":
-		[
-		],
-		"width": 0.0
-	},
-	"selected_group": 0,
-	"settings":
-	{
 	},
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": false,
 	"side_bar_width": 50.0,
-	"status_bar_visible": true,
-	"template_settings":
-	{
-	}
+	"status_bar_visible": true
 }
