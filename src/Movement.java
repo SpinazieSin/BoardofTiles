@@ -44,7 +44,9 @@ public class Movement {
 				System.out.println("please select where you want to move it.");
 				System.out.print("possible moves: ");
 				for(Integer[] neighbour : board.tiles[old_x_cor][old_y_cor].neighbours){
-					System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
+					if(board.tiles[neighbour[0]][neighbour[1]].unit[0] == 0) {
+						System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
+					}
 				}
 				System.out.println("");
 				new_x_cor = scan.nextInt();

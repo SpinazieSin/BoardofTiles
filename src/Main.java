@@ -5,6 +5,7 @@ public class Main {
     public static void main (String[] args) {
         Board board = build_board(8, 4, 4);
         // Gameloop
+        Movement.playerMove(board);
         while (true) {
             Scanner scan = new Scanner(System.in);
             try {
