@@ -89,29 +89,33 @@ public class Movement {
 			}
 			Tile selectedUnit = board.tiles[old_x_cor][old_y_cor];
 			Tile newPos = board.tiles[new_x_cor][new_y_cor];
+
 			moveChar(board, selectedUnit, newPos);
-			ArrayList<Tile> doublemove = new ArrayList<Tile>();
+
+			ArrayList<Tile> doublemovecheck = new ArrayList<Tile>();
 			for(int i = 0; i< charList.size(); i++){
 				charList.get(i);
 				// add the left over moves to a temporary arraylist
 				if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
-					doublemove.add(charList.get(i));
+					doublemovecheck.add(charList.get(i));
 				}
 			}
 			// if more than one move left, change leftover move to new location and remove one move
 			Boolean removeTile = true;
-			if(doublemove.size() > 1) {
+			if(doublemovecheck.size() > 1) {
 				for(int i = 0; i< charList.size(); i++){
 					if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor && removeTile){
 						charList.remove(charList.get(i));
 						removeTile = false;
 					}
-					if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
-						charList.get(i).x_cor = new_x_cor;
-						charList.get(i).y_cor = new_y_cor;
+					if(board.tiles[charList.get(i).x_cor][charList.get(i).y_cor].unit[0] == 0){
+						if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
+							charList.get(i).x_cor = new_x_cor;
+							charList.get(i).y_cor = new_y_cor;
+						}
 					}
 				}
-			} else if(doublemove.size() == 1) {
+			} else if(doublemovecheck.size() == 1) {
 				for(int i = 0; i< charList.size(); i++){
 					if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
 						charList.remove(charList.get(i));
