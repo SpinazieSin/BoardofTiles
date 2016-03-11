@@ -1,12 +1,22 @@
 import java.util.*;
 
+import javax.swing.JFrame;
+
 public class Main {
 
     public static void main (String[] args) {
+        
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         Board board = build_board(8, 4, 4);
         // Gameloop
-        Movement.playerMove(board);
         while (true) {
+            f.setContentPane(new drawing.Main());
+            f.pack();
+            f.setLocationRelativeTo(null);
+            f.setVisible(true);
+            Movement.playerMove(board);
             Scanner scan = new Scanner(System.in);
             try {
                 int x_cor = scan.nextInt();
@@ -19,6 +29,11 @@ public class Main {
                 continue;
             }
             print_board(board);
+            //break;
+            //drawing.Main frame = new drawing.Main();
+            //frame.kill()
+
+
         }
     }
 

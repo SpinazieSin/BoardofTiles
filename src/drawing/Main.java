@@ -1,5 +1,8 @@
+package drawing;
+
 import java.awt.*;
 import javax.swing.*;
+
 
 public class Main extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -14,7 +17,19 @@ public class Main extends JPanel {
     FontMetrics metrics;
 
     public Main() {
+         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    }
+
+    public Main(JFrame f) {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        //JFrame f = new JFrame();
+        //Main p = new Main();
+
+        f.setContentPane(this);
+        //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }
 
     @Override
@@ -50,8 +65,6 @@ public class Main extends JPanel {
                 int yLbl = row - half;
                 int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
                 int y = (int) (origin.y + yOff * (row - half) * 3);
-                System.out.println(x);
-                System.out.println(y);
 
                 drawHex(g, x, y, radius);
 
@@ -122,13 +135,6 @@ public class Main extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame f = new JFrame();
-        Main p = new Main();
-
-        f.setContentPane(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        new Main(new JFrame() );
     }
 }
