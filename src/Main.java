@@ -28,17 +28,31 @@ public class Main {
         return(board);
     }
 
+
     public static void print_board(Board board){
-		for (int x_offset = 0; x_offset < board.x_max+1; x_offset++) {
-            for (int y_offset = 0; y_offset < board.y_max+board.y_min; y_offset++) {
+        System.out.print("+-");
+        for (int y_axis = 0; y_axis < board.y_max+board.y_min+1; y_axis++) {
+            System.out.print("-"+y_axis+"-");
+        }
+        System.out.println("-+");
+        for (int x_offset = 0; x_offset < board.x_max+1; x_offset++) {
+            System.out.print(x_offset+"-");
+            for (int y_offset = 0; y_offset < board.y_max+board.y_min+1; y_offset++) {
                 if (board.tiles[x_offset][y_offset] == null) {
+                    System.out.print("---");
                    continue;
                 } else {
-                    System.out.print(board.tiles[x_offset][y_offset].unit[0]);
+                    String unit = getUnitName(board.tiles[x_offset][y_offset].unit[0]);
+                    System.out.print("["+unit+"]");
                 }
             }
-            System.out.println();
-    	}
+            System.out.println("-"+x_offset);
+        }
+        System.out.print("+-");
+        for (int y_axis = 0; y_axis < board.y_max+board.y_min+1; y_axis++) {
+            System.out.print("-"+y_axis+"-");
+        }
+        System.out.println("-+");
     }
 
     public static void init_units(Board board) {
@@ -110,5 +124,14 @@ public class Main {
         } else {
             return(0);
         }
+    }
+
+    private static String getUnitName(int index){
+        if(index == 0) return(" ");
+        if(index == 1) return("S");
+        if(index == 2) return("E");
+        if(index == 3) return("G");
+        if(index == 4) return("O");
+        return("WHAT?");
     }
 }
