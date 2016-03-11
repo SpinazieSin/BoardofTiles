@@ -3,59 +3,59 @@ import java.util.*;
 public class Main {
 
     public static void main (String[] args) {
-        Board board = build_board(8, 4, 4);
+        Board board = buildBoard(8, 4, 4);
         // Gameloop
         Movement.playerMove(board);
         while (true) {
             Scanner scan = new Scanner(System.in);
             try {
-                int x_cor = scan.nextInt();
-                int y_cor = scan.nextInt();
-                System.out.println(x_cor);
-                System.out.println(y_cor);
+                int xCor = scan.nextInt();
+                int yCor = scan.nextInt();
+                System.out.println(xCor);
+                System.out.println(yCor);
             }
             catch (Exception e) {
                 System.out.println("Bad input, try x and y coordinates seperated by spaces");
                 continue;
             }
-            print_board(board);
+            printBoard(board);
         }
     }
 
-    public static Board build_board(int x_max, int y_max, int y_min){
-        Board board = new Board(x_max,y_max,y_min);
-        init_units(board);
+    public static Board buildBoard(int xMax, int yMax, int yMin){
+        Board board = new Board(xMax,yMax,yMin);
+        initUnits(board);
         return(board);
     }
 
 
-    public static void print_board(Board board){
+    public static void printBoard(Board board){
         System.out.print("+-");
-        for (int y_axis = 0; y_axis < board.y_max+board.y_min+1; y_axis++) {
-            System.out.print("-"+y_axis+"-");
+        for (int yAxis = 0; yAxis < board.yMax+board.yMin+1; yAxis++) {
+            System.out.print("-"+yAxis+"-");
         }
         System.out.println("-+");
-        for (int x_offset = 0; x_offset < board.x_max+1; x_offset++) {
-            System.out.print(x_offset+"-");
-            for (int y_offset = 0; y_offset < board.y_max+board.y_min+1; y_offset++) {
-                if (board.tiles[x_offset][y_offset] == null) {
+        for (int xOffset = 0; xOffset < board.xMax+1; xOffset++) {
+            System.out.print(xOffset+"-");
+            for (int yOffset = 0; yOffset < board.yMax+board.yMin+1; yOffset++) {
+                if (board.tiles[xOffset][yOffset] == null) {
                     System.out.print("---");
                    continue;
                 } else {
-                    String unit = getUnitName(board.tiles[x_offset][y_offset].unit[0]);
+                    String unit = getUnitName(board.tiles[xOffset][yOffset].unit[0]);
                     System.out.print("["+unit+"]");
                 }
             }
-            System.out.println("-"+x_offset);
+            System.out.println("-"+xOffset);
         }
         System.out.print("+-");
-        for (int y_axis = 0; y_axis < board.y_max+board.y_min+1; y_axis++) {
-            System.out.print("-"+y_axis+"-");
+        for (int yAxis = 0; yAxis < board.yMax+board.yMin+1; yAxis++) {
+            System.out.print("-"+yAxis+"-");
         }
         System.out.println("-+");
     }
 
-    public static void init_units(Board board) {
+    public static void initUnits(Board board) {
         int[] orc = {4, 10, 8};
         int[] goblin = {3, 3, 4};
         int[] general = {2, 5, 8};
@@ -92,7 +92,7 @@ public class Main {
         int goblincounter = 0;
         int orccounter = 0;
         int generalcounter = 0;
-        for (int j = 0; j<board.x_max+1; j++) {
+        for (int j = 0; j<board.xMax+1; j++) {
             for (int i = 0; i<board.tiles[j].length; i++) {
                 if(board.tiles[j][i] == null){
                     continue;
@@ -100,8 +100,8 @@ public class Main {
                     tilecounter ++;
                     if(board.tiles[j][i].unit[0] == 1) {
                         swordsmancounter++;
-                        System.out.println("xcor: " + board.tiles[j][i].x_cor);
-                        System.out.println("ycor: " + board.tiles[j][i].y_cor);
+                        System.out.println("xcor: " + board.tiles[j][i].xCor);
+                        System.out.println("ycor: " + board.tiles[j][i].yCor);
 
                     }
                     if(board.tiles[j][i].unit[0] == 2) generalcounter++;

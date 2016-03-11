@@ -5,16 +5,16 @@ public class Movement {
 	public static void moveChar(Board board, Tile tile, Tile newPos) {
 		int[] emptyUnit = {0,0,0};
 		// Do we move to an empty tile?
-		if(board.tiles[newPos.x_cor][newPos.y_cor].unit[0] == 0){
-			board.tiles[newPos.x_cor][newPos.y_cor].unit = tile.unit;
-			board.tiles[tile.x_cor][tile.y_cor].unit = emptyUnit;
-			System.out.println("Moved to: "+ newPos.x_cor+", "+newPos.y_cor);
+		if(board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
+			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
+			board.tiles[tile.xCor][tile.yCor].unit = emptyUnit;
+			System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 		// Hit unit if tile not empty
 		} else{
 			System.out.println("Attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				System.out.println("Hit!");
-				int[] hitUnit = board.tiles[newPos.x_cor][newPos.y_cor].unit;
+				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
 				// if the unit that is hit has more than no hitpoints, do one damage
 				if (hitUnit[1] > 0) hitUnit[1] = hitUnit[1]-1;
 				// if unit has one hitpoint and is hit, it dies
@@ -22,7 +22,7 @@ public class Movement {
 					hitUnit = emptyUnit;
 					System.out.println("it died");
 				}
-				board.tiles[newPos.x_cor][newPos.y_cor].unit = hitUnit;
+				board.tiles[newPos.xCor][newPos.yCor].unit = hitUnit;
 			} else {
 				System.out.println("Missed..");
 			}
@@ -31,7 +31,7 @@ public class Movement {
 
 	public static void playerMove(Board board){
 		ArrayList<Tile> charList = new ArrayList<Tile>(); // list of board locations/characters that need to be moved
-		for (int j = 0; j<board.x_max+1; j++) {
+		for (int j = 0; j<board.xMax+1; j++) {
      		for (int i = 0; i<board.tiles[j].length; i++) {
      			if(board.tiles[j][i] == null){
      				continue;
@@ -46,38 +46,38 @@ public class Movement {
      	}
      	while(!charList.isEmpty()){
 	     	Scanner scan = new Scanner(System.in);
-			int old_x_cor = 0;
-			int old_y_cor = 0;
-			int new_x_cor = 0;
-			int new_y_cor = 0;
+			int oldXCor = 0;
+			int oldYCor = 0;
+			int newXCor = 0;
+			int newYCor = 0;
 			// Input loop
 			while(true) {
 				try {
-					Main.print_board(board);
+					Main.printBoard(board);
 					System.out.println("characters to move: ");
 					Set<Tile> charHash = new HashSet<>();
 					charHash.addAll(charList);
 			     	for(Tile charTile : charHash){
-			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.x_cor + "," + charTile.y_cor + "]");
+			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]");
 			     	}
 					System.out.println("Please select a character to move.");	
 					String selectUnit = scan.nextLine();
-					old_x_cor = Character.getNumericValue(selectUnit.charAt(0));
-					old_y_cor = Character.getNumericValue(selectUnit.charAt(2));
-					if (!isExistingTile(old_x_cor, old_y_cor, charList)) {
+					oldXCor = Character.getNumericValue(selectUnit.charAt(0));
+					oldYCor = Character.getNumericValue(selectUnit.charAt(2));
+					if (!isExistingTile(oldXCor, oldYCor, charList)) {
 						System.out.println("Not a unit, use x and y coordinates seperated by a ,");
 						continue;
 					}
 					System.out.println("Please select where you want to move it.");
 					System.out.print("possible moves: ");
-					for(Integer[] neighbour : board.tiles[old_x_cor][old_y_cor].neighbours){
+					for(Integer[] neighbour : board.tiles[oldXCor][oldYCor].neighbours){
 						System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
 					}
 					System.out.println("");
 					String newPosition = scan.nextLine();
-					new_x_cor = Character.getNumericValue(newPosition.charAt(0));
-					new_y_cor = Character.getNumericValue(newPosition.charAt(2));
-					if (!isExistingNeighbour(new_x_cor, new_y_cor, board.tiles[old_x_cor][old_y_cor].neighbours)) {
+					newXCor = Character.getNumericValue(newPosition.charAt(0));
+					newYCor = Character.getNumericValue(newPosition.charAt(2));
+					if (!isExistingNeighbour(newXCor, newYCor, board.tiles[oldXCor][oldYCor].neighbours)) {
 						System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
 						continue;
 					}
@@ -87,8 +87,8 @@ public class Movement {
 					continue;
 				}
 			}
-			Tile selectedUnit = board.tiles[old_x_cor][old_y_cor];
-			Tile newPos = board.tiles[new_x_cor][new_y_cor];
+			Tile selectedUnit = board.tiles[oldXCor][oldYCor];
+			Tile newPos = board.tiles[newXCor][newYCor];
 
 			moveChar(board, selectedUnit, newPos);
 
@@ -96,7 +96,7 @@ public class Movement {
 			for(int i = 0; i< charList.size(); i++){
 				charList.get(i);
 				// add the left over moves to a temporary arraylist
-				if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
+				if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
 					doublemovecheck.add(charList.get(i));
 				}
 			}
@@ -104,20 +104,20 @@ public class Movement {
 			Boolean removeTile = true;
 			if(doublemovecheck.size() > 1) {
 				for(int i = 0; i< charList.size(); i++){
-					if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor && removeTile){
+					if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor && removeTile){
 						charList.remove(charList.get(i));
 						removeTile = false;
 					}
-					if(board.tiles[charList.get(i).x_cor][charList.get(i).y_cor].unit[0] == 0){
-						if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
-							charList.get(i).x_cor = new_x_cor;
-							charList.get(i).y_cor = new_y_cor;
+					if(board.tiles[charList.get(i).xCor][charList.get(i).yCor].unit[0] == 0){
+						if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
+							charList.get(i).xCor = newXCor;
+							charList.get(i).yCor = newYCor;
 						}
 					}
 				}
 			} else if(doublemovecheck.size() == 1) {
 				for(int i = 0; i< charList.size(); i++){
-					if(charList.get(i).x_cor == old_x_cor && charList.get(i).y_cor == old_y_cor){
+					if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
 						charList.remove(charList.get(i));
 					}
 				}
@@ -127,7 +127,7 @@ public class Movement {
 
 	private static Boolean isExistingTile(int xCor, int yCor, ArrayList<Tile> tileList) {
 		for (Tile tile : tileList) {
-			if (tile.x_cor == xCor && tile.y_cor == yCor) {
+			if (tile.xCor == xCor && tile.yCor == yCor) {
 				return true;
 			}
 		}
