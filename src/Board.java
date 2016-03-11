@@ -69,12 +69,12 @@ public class Board {
             for (int neighbour_count = 0; neighbour_count < tile_list_size; neighbour_count++) {
                 int neighbour_x_cor = tile_list.get(neighbour_count).x_cor;
                 int neighbour_y_cor = tile_list.get(neighbour_count).y_cor;
-                if (tile.x_cor - 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
-                    tile.x_cor == neighbour_x_cor && tile.y_cor -1 == neighbour_y_cor ||
-                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ||
-                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
-                    tile.x_cor  == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
-                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor == neighbour_y_cor ) {
+                if (tile.x_cor + 1 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
+                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor + 0 == neighbour_y_cor ||
+                    tile.x_cor + 0 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
+                    tile.x_cor + 0 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
+                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor + 0 == neighbour_y_cor ) {
                     Integer[] neighbour_cor = {neighbour_x_cor, neighbour_y_cor};
                     neighbour_list.add(neighbour_cor);
                 }
@@ -82,7 +82,6 @@ public class Board {
             Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
             tiles[tile.x_cor][tile.y_cor] = final_tile;
         }
-        System.out.println(id);
     }
 
     // Prints the coordinates of the neighbours of a tile

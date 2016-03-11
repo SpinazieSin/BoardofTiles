@@ -75,8 +75,8 @@ public class Movement {
 					}
 					System.out.println("");
 					String newPosition = scan.nextLine();
-					new_x_cor = Character.getNumericValue(selectUnit.charAt(0));
-					new_y_cor = Character.getNumericValue(selectUnit.charAt(2));
+					new_x_cor = Character.getNumericValue(newPosition.charAt(0));
+					new_y_cor = Character.getNumericValue(newPosition.charAt(2));
 					if (!isExistingNeighbour(new_x_cor, new_y_cor, board.tiles[old_x_cor][old_y_cor].neighbours)) {
 						System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
 						continue;
@@ -132,6 +132,7 @@ public class Movement {
 
 	private static Boolean isExistingNeighbour(int xCor, int yCor, ArrayList<Integer[]> neighbourList) {
 		for (Integer[] neighbour: neighbourList) {
+			System.out.println(xCor + "--------------------" + neighbour[0]);
 			if (neighbour[0] == xCor && neighbour[1] == yCor) {
 				return true;
 			}
