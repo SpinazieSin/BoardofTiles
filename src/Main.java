@@ -1,4 +1,5 @@
 import java.util.*;
+import drawing.*;
 
 import javax.swing.JFrame;
 
@@ -10,9 +11,12 @@ public class Main {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Board board = buildBoard(8, 4, 4);
+        Integer[][] data = boardDrawData(board);
+        drawing.Main frame = new drawing.Main(data);
         // Gameloop
         while (true) {
-            f.setContentPane(new drawing.Main());
+            Integer[][] newdata = boardDrawData(board);
+            f.setContentPane(new drawing.Main(newdata));
             f.pack();
             f.setLocationRelativeTo(null);
             f.setVisible(true);
@@ -146,5 +150,29 @@ public class Main {
         if(index == 3) return("G");
         if(index == 4) return("O");
         return("WHAT?");
+    }
+
+    private static Integer[][] boardDrawData(Board board){
+        Integer[][] data = new Integer[9][9]; 
+        for (int j = 0; j<board.xMax+1; j++) {
+            for (int i = 0; i<board.tiles[j].length; i++) {
+                if(board.tiles[j][i] == null){
+                    continue;
+                } else {
+                    if (board.tiles[j][i].unit[0] == 1){
+                        data[j][i] = 1;
+                    }else if(board.tiles[j][i].unit[0] == 2){
+                        data[j][i] = 2;
+                    }else if(board.tiles[j][i].unit[0] == 3){
+                        data[j][i] = 3;
+                    }else if(board.tiles[j][i].unit[0] == 4){
+                        data[j][i] = 4;
+                    } else {
+                        data[j][i] = 0;
+                    }
+                }
+            }
+        }
+        return data;
     }
 }
