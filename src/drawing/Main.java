@@ -127,7 +127,8 @@ public class Main extends JPanel {
         g.drawString(text, x - w/2, y + h/2);
         g.setColor(new Color(0xffffff));
         g.drawString(character, x - w/2, y + h/2);
-        if(xCor < data.length && data[xCor].length < yCor){
+        if(xCor < data.length && yCor < data[xCor].length){
+            System.out.println("I am in the if statement.");
             if(data[xCor][yCor] == 1){
                 g.drawImage(swordsman, x - 40, y - 45, null);
             }
