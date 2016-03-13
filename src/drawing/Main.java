@@ -2,7 +2,11 @@ package drawing;
 
 import java.awt.*;
 import javax.swing.*;
-
+import java.io.*;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import javax.imageio.ImageIO;
 
 public class Main extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -19,7 +23,7 @@ public class Main extends JPanel {
 
     public Main(Integer[][] dataIn) {
         data = dataIn;
-         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     public Main(JFrame f) {
@@ -95,17 +99,22 @@ public class Main extends JPanel {
         Hexagon hex = new Hexagon(x, y, r);
         String text = String.format(xCor + ", " + yCor);
         String character = "";
-        if(data[xCor][yCor] == 1){
-            character = "Sword";
-        }else if(data[xCor][yCor] == 2) {
-            character = "Gen";
-        }else if(data[xCor][yCor] == 3) {
-            character = "Gob";
-        }else if(data[xCor][yCor] == 4) {
-            character = "Orc";
-        }
         int w = metrics.stringWidth(text);
         int h = metrics.getHeight();
+        int xStuff = x - w/2;
+        int yStuff = y + h/2;
+        BufferedImage goblin = null;
+        BufferedImage swordsman = null;
+        BufferedImage general = null;
+        BufferedImage orc = null;
+        try {
+            goblin = ImageIO.read(new File("Goblin.png"));
+            swordsman = ImageIO.read(new File("Swordsman.png"));
+            general = ImageIO.read(new File("General.png"));
+            orc = ImageIO.read(new File("Orc.png"));
+        } catch (IOException e) {
+            System.out.println(e);
+        }
         if(!secondColor){
             hex.draw(g2d, x, y, 0, 0x00CC66, true);
             hex.draw(g2d, x, y, 4, 0x00994C, false);
@@ -118,6 +127,21 @@ public class Main extends JPanel {
         g.drawString(text, x - w/2, y + h/2);
         g.setColor(new Color(0xffffff));
         g.drawString(character, x - w/2, y + h/2);
+        if(xCor < data.length && data[xCor].length < yCor){
+            if(data[xCor][yCor] == 1){
+                g.drawImage(swordsman, x - 40, y - 45, null);
+            }
+            if(data[xCor][yCor] == 3) {
+                g.drawImage(goblin, x - 40, y - 45, null);
+            }
+            if(data[xCor][yCor] == 2) {
+                g.drawImage(general, x - 40, y - 45, null);
+            }
+            if(data[xCor][yCor] == 4) {
+                g.drawImage(orc, x - 40, y - 45, null);
+            }
+        }
+
     }
 
     private String coord(int value) {
