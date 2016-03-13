@@ -3,90 +3,90 @@ import java.util.*;
 public class Board {
         
     public Tile[][] tiles;
-    public int x_max;
-    public int y_max;
-    public int y_min;
+    public int xMax;
+    public int yMax;
+    public int yMin;
         
     // the Tile class
     // one constructor
-    public Board(int x_max_in, int y_max_in, int y_min_in) {
-        ArrayList<Tile> tile_list = new ArrayList<Tile>();
-        x_max = x_max_in;
-        y_max = y_max_in;
-        y_min = y_min_in;
+    public Board(int xMaxInt, int yMaxInt, int yMinInt) {
+        ArrayList<Tile> tileList = new ArrayList<Tile>();
+        xMax = xMaxInt;
+        yMax = yMaxInt;
+        yMin = yMinInt;
         int id = 0;
 
-        int[] placeholder_unit = {0,0,0};
+        int[] placeholderUnit = {0,0,0};
         // Create middle line
-        for (int x = 0; x <= x_max; x++) {
-            ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-            Tile t= new Tile(x, y_min, placeholder_unit, intarr);
-            tile_list.add(t);
+        for (int x = 0; x <= xMax; x++) {
+            ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
+            Tile t= new Tile(x, yMin, placeholderUnit, neighbourPlaceholder);
+            tileList.add(t);
             id++;
         }
-        for (int x_offset = 0; x_offset < x_max; x_offset++) {
+        for (int xOffset = 0; xOffset < xMax; xOffset++) {
             // Create top of the board
-            if (x_offset <= x_max-y_max){
-                for(int y_offset = 1; y_offset <= y_max; y_offset++){
-                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, y_offset+y_min, placeholder_unit, intarr);
-                    tile_list.add(t);
+            if (xOffset <= xMax-yMax){
+                for(int yOffset = 1; yOffset <= yMax; yOffset++){
+                    ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(xOffset, yOffset+yMin, placeholderUnit, neighbourPlaceholder);
+                    tileList.add(t);
                     id++;
                 }
             } else {
-                for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
-                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, y_offset+y_min, placeholder_unit, intarr);
-                    tile_list.add(t);
+                for (int yOffset = 1; yOffset <= xMax-xOffset; yOffset++) {
+                    ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(xOffset, yOffset+yMin, placeholderUnit, neighbourPlaceholder);
+                    tileList.add(t);
                     id++;
                 }
             }
             // Create bottom of the board
-            if (x_offset <= x_max-y_min){
-                for(int y_offset = 1; y_offset <= y_min; y_offset++){
-                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, -y_offset+y_min, placeholder_unit, intarr);
-                    tile_list.add(t);
+            if (xOffset <= xMax-yMin){
+                for(int yOffset = 1; yOffset <= yMin; yOffset++){
+                    ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(xOffset, -yOffset+yMin, placeholderUnit, neighbourPlaceholder);
+                    tileList.add(t);
                     id++;
                 }
             } else {
-                for (int y_offset = 1; y_offset <= x_max-x_offset; y_offset++) {
-                    ArrayList<Integer[]> intarr=  new ArrayList<Integer[]>();
-                    Tile t= new Tile(x_offset, -y_offset+y_min, placeholder_unit, intarr);
-                    tile_list.add(t);
+                for (int yOffset = 1; yOffset <= xMax-xOffset; yOffset++) {
+                    ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
+                    Tile t= new Tile(xOffset, -yOffset+yMin, placeholderUnit, neighbourPlaceholder);
+                    tileList.add(t);
                     id++;
                 }
             }
         }
 
         // Loop over previous array to create a final list of all the tiles
-        int tile_list_size = tile_list.size();
-        tiles = new Tile[tile_list_size][y_max+y_min+1];
-        for (int tile_count = 0; tile_count < tile_list_size; tile_count++) {
-            Tile tile = tile_list.get(tile_count);
+        int tileListSize = tileList.size();
+        tiles = new Tile[tileListSize][yMax+yMin+1];
+        for (int tileCount = 0; tileCount < tileListSize; tileCount++) {
+            Tile tile = tileList.get(tileCount);
             // Find all neighbours to the tile
-            ArrayList<Integer[]> neighbour_list = new ArrayList<Integer[]>();
-            for (int neighbour_count = 0; neighbour_count < tile_list_size; neighbour_count++) {
-                int neighbour_x_cor = tile_list.get(neighbour_count).x_cor;
-                int neighbour_y_cor = tile_list.get(neighbour_count).y_cor;
-                if (tile.x_cor + 1 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
-                    tile.x_cor + 1 == neighbour_x_cor && tile.y_cor + 0 == neighbour_y_cor ||
-                    tile.x_cor + 0 == neighbour_x_cor && tile.y_cor + 1 == neighbour_y_cor ||
-                    tile.x_cor + 0 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
-                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor - 1 == neighbour_y_cor ||
-                    tile.x_cor - 1 == neighbour_x_cor && tile.y_cor + 0 == neighbour_y_cor ) {
-                    Integer[] neighbour_cor = {neighbour_x_cor, neighbour_y_cor};
-                    neighbour_list.add(neighbour_cor);
+            ArrayList<Integer[]> neighbourList = new ArrayList<Integer[]>();
+            for (int neighbourCount = 0; neighbourCount < tileListSize; neighbourCount++) {
+                int neighbourXCor = tileList.get(neighbourCount).xCor;
+                int neighbourYCor = tileList.get(neighbourCount).yCor;
+                if (tile.xCor + 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                    tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                    tile.xCor + 0 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                    tile.xCor + 0 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                    tile.xCor - 1 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                    tile.xCor - 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ) {
+                    Integer[] neighbourPosition = {neighbourXCor, neighbourYCor};
+                    neighbourList.add(neighbourPosition);
                 }
             }
-            Tile final_tile = new Tile(tile.x_cor, tile.y_cor, tile.unit, neighbour_list);
-            tiles[tile.x_cor][tile.y_cor] = final_tile;
+            Tile finalTile = new Tile(tile.xCor, tile.yCor, tile.unit, neighbourList);
+            tiles[tile.xCor][tile.yCor] = finalTile;
         }
     }
 
     // Prints the coordinates of the neighbours of a tile
     private void printNeighbours(Tile tile) {
-        System.out.println("Neighbours of tile: " + tile.x_cor + "," + tile.y_cor);
+        System.out.println("Neighbours of tile: " + tile.xCor + "," + tile.yCor);
         for (Integer[] neighbour : tile.neighbours) {
             System.out.println("x,y: " + neighbour[0] + "," + neighbour[1]);
         }
