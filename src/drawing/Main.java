@@ -1,5 +1,8 @@
+package drawing;
+
 import java.awt.*;
 import javax.swing.*;
+
 
 public class Main extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -9,12 +12,26 @@ public class Main extends JPanel {
     private int id = 0;
     private int xCor = 4;
     private int yCor = 8;
+    private Integer[][] data;
 
     private Font font = new Font("Arial", Font.BOLD, 18);
     FontMetrics metrics;
 
-    public Main() {
+    public Main(Integer[][] dataIn) {
+        data = dataIn;
+         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    }
+
+    public Main(JFrame f) {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        //JFrame f = new JFrame();
+        //Main p = new Main();
+
+        f.setContentPane(this);
+        //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true);
     }
 
     @Override
@@ -50,8 +67,6 @@ public class Main extends JPanel {
                 int yLbl = row - half;
                 int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
                 int y = (int) (origin.y + yOff * (row - half) * 3);
-                System.out.println(x);
-                System.out.println(y);
 
                 drawHex(g, x, y, radius);
 
@@ -79,6 +94,16 @@ public class Main extends JPanel {
 
         Hexagon hex = new Hexagon(x, y, r);
         String text = String.format(xCor + ", " + yCor);
+        String character = "";
+        if(data[xCor][yCor] == 1){
+            character = "Sword";
+        }else if(data[xCor][yCor] == 2) {
+            character = "Gen";
+        }else if(data[xCor][yCor] == 3) {
+            character = "Gob";
+        }else if(data[xCor][yCor] == 4) {
+            character = "Orc";
+        }
         int w = metrics.stringWidth(text);
         int h = metrics.getHeight();
         if(!secondColor){
@@ -89,8 +114,10 @@ public class Main extends JPanel {
             hex.draw(g2d, x, y, 4, 0x808080, false);
         }
 
-        g.setColor(new Color(0xFFFFFF));
+        g.setColor(new Color(0x888888));
         g.drawString(text, x - w/2, y + h/2);
+        g.setColor(new Color(0xffffff));
+        g.drawString(character, x - w/2, y + h/2);
     }
 
     private String coord(int value) {
@@ -122,13 +149,6 @@ public class Main extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame f = new JFrame();
-        Main p = new Main();
-
-        f.setContentPane(p);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        new Main(new JFrame() );
     }
 }

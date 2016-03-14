@@ -1,5 +1,8 @@
 import java.util.*;
 import java.io.*;
+import drawing.*;
+
+import javax.swing.JFrame;
 
 public class Main {
 
@@ -34,11 +37,38 @@ public class Main {
                     break;
                 }
             }
-            breakCount++;
-            if (breakCount % 100 == 0) {
-                System.out.println("Calculating.. " +breakCount);
-            }
         }
+        // JFrame f = new JFrame();
+        // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Board board = buildBoard(8, 4, 4);
+        // Integer[][] data = boardDrawData(board);
+        // drawing.Main frame = new drawing.Main(data);
+        // // Gameloop
+        // while (true) {
+        //     Integer[][] newdata = boardDrawData(board);
+        //     f.setContentPane(new drawing.Main(newdata));
+        //     f.pack();
+        //     f.setLocationRelativeTo(null);
+        //     f.setVisible(true);
+        //     Movement.playerMove(board);
+        //     Scanner scan = new Scanner(System.in);
+        //     try {
+        //         int xCor = scan.nextInt();
+        //         int yCor = scan.nextInt();
+        //         System.out.println(xCor);
+        //         System.out.println(yCor);
+        //     }
+        //     breakCount++;
+        //     if (breakCount % 100 == 0) {
+        //         System.out.println("Calculating.. " +breakCount);
+        //     //break;
+        //     //drawing.Main frame = new drawing.Main();
+        //     //frame.kill()
+        //     printBoard(board);
+        // }
+
+        // Write to file
         // try{
         //     writeDoubleArrayToFile("twoPositions.model", Learning.learning);
         // } catch (Exception e) {
@@ -137,5 +167,29 @@ public class Main {
         }
         outputWriter.flush();  
         outputWriter.close();  
+    }
+
+    private static Integer[][] boardDrawData(Board board){
+        Integer[][] data = new Integer[9][9]; 
+        for (int j = 0; j<board.xMax+1; j++) {
+            for (int i = 0; i<board.tiles[j].length; i++) {
+                if(board.tiles[j][i] == null){
+                    continue;
+                } else {
+                    if (board.tiles[j][i].unit[0] == 1){
+                        data[j][i] = 1;
+                    }else if(board.tiles[j][i].unit[0] == 2){
+                        data[j][i] = 2;
+                    }else if(board.tiles[j][i].unit[0] == 3){
+                        data[j][i] = 3;
+                    }else if(board.tiles[j][i].unit[0] == 4){
+                        data[j][i] = 4;
+                    } else {
+                        data[j][i] = 0;
+                    }
+                }
+            }
+        }
+        return data;
     }
 }
