@@ -1,12 +1,17 @@
 import java.util.*;
 
-public class Board {
-        
+public class Board implements Cloneable{
+    
     public Tile[][] tiles;
     public int xMax;
     public int yMax;
     public int yMin;
-        
+    
+    @Override
+    public Board clone() throws CloneNotSupportedException{
+        return new Board ( 8, 4, 4 );
+    }
+    
     // the Tile class
     // one constructor
     public Board(int xMaxInt, int yMaxInt, int yMinInt) {
@@ -89,6 +94,45 @@ public class Board {
         System.out.println("Neighbours of tile: " + tile.xCor + "," + tile.yCor);
         for (Integer[] neighbour : tile.neighbours) {
             System.out.println("x,y: " + neighbour[0] + "," + neighbour[1]);
+        }
+    }
+
+    // returns 0 if no player has won, 1 if humans win and 2 if orcs win.
+    public static int gameWon(Board board) {
+        int tilecounter = 0;
+        int swordsmancounter = 0;
+        int goblincounter = 0;
+        int orccounter = 0;
+        int generalcounter = 0;
+        for (int j = 0; j<board.xMax+1; j++) {
+            for (int i = 0; i<board.tiles[j].length; i++) {
+                if(board.tiles[j][i] == null){
+                    continue;
+                } else {
+                    tilecounter ++;
+                    if(board.tiles[j][i].unit[0] == 1) {
+                        swordsmancounter++;
+
+                    }
+                    if(board.tiles[j][i].unit[0] == 2) generalcounter++;
+                    if(board.tiles[j][i].unit[0] == 3) goblincounter++;
+                    if(board.tiles[j][i].unit[0] == 4) orccounter++;
+
+                }
+
+            }
+        }
+        // System.out.println("swordsman " + swordsmancounter);
+        // System.out.println("general " + generalcounter);
+        // System.out.println("goblin " + goblincounter);
+        // System.out.println("orc " + orccounter);
+
+        if(swordsmancounter == 0 && generalcounter == 0){
+            return(-1);
+        } else if(goblincounter == 0 && orccounter == 0){
+            return(1);
+        } else {
+            return(0);
         }
     }
 }
