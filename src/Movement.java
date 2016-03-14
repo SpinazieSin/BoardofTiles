@@ -1,6 +1,14 @@
 import java.util.*;
 
+import java.io.*;
+import drawing.*;
+
+import javax.swing.JFrame;
+
 public class Movement {
+
+	public static JFrame f;
+	public static boolean drawFrames = false;
 
 	public static int randInt(int min, int max) {
 	    Random rand = new Random();
@@ -17,7 +25,7 @@ public class Movement {
 			// System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 		// Hit unit if tile not empty
 		} else{
-			// System.out.println("Attacking "+getUnitName(newPos));
+			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
@@ -45,7 +53,7 @@ public class Movement {
 			return newPos;
 		// Hit unit if tile not empty
 		} else{
-			// System.out.println("Attacking "+getUnitName(newPos));
+			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
@@ -101,6 +109,17 @@ public class Movement {
 	     		}
 	     		if (newPos != randomUnit) {
 	     			randomUnit = moveAiChar(board, randomUnit, newPos);
+	     			if(drawFrames){
+						Integer[][] newdata = boardDrawData(board);
+						f.setContentPane(new drawing.Main(newdata));
+				        f.pack();
+				        f.setVisible(true);
+				    }
+                    try {
+	                    Thread.sleep(400);
+	                } catch(InterruptedException ex) {
+	                    Thread.currentThread().interrupt();
+	                }
 	     		}
 	     	}
 	    }
@@ -123,8 +142,8 @@ public class Movement {
      	Tile[] unitsToMove;
      	while (!charList.isEmpty()) {
      		int characterAmount = charList.size();
-     		if (characterAmount > 2) {
-     			unitsToMove = new Tile[2];
+     		if (characterAmount > 3) {
+     			unitsToMove = new Tile[3];
      		}
      		else {
      			unitsToMove = new Tile[characterAmount];
@@ -140,7 +159,7 @@ public class Movement {
 
 	public static void createNewMove(Board board, Tile[] unitsToMove, int race) {
 		Tile[][] nextStates = getPossibleStates(board, unitsToMove, race);
-		Board boardCopy = new Board(8,4,4);
+		Board boardCopy = board;
 		try {
 			boardCopy = board.clone();
 		} catch (Exception e) {
@@ -149,42 +168,76 @@ public class Movement {
 		Tile[] nextState = Learning.Learning(boardCopy, unitsToMove, nextStates, race);
 		int xCor = nextState[0].xCor;
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
+			Board.printNeighbours(unitsToMove[unitCount]);
 			moveChar(board, unitsToMove[unitCount], nextState[unitCount]);
+			if(drawFrames){
+				Integer[][] newdata = boardDrawData(board);
+				f.setContentPane(new drawing.Main(newdata));
+		        f.pack();
+		        f.setVisible(true);
+		    }
+		    try {
+                Thread.sleep(500);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
 		}
 	}
 
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
-		Random random = new Random();
-		Tile[][] nextStateList = new Tile[36][state.length];
-		for (int strategyCount = 0; strategyCount < 36; strategyCount++) {
+		Tile[][] nextStateList = new Tile[125][state.length];
+		for (int strategyCount = 0; strategyCount < 125; strategyCount++) {
 			Board boardCopy = board;
-			for (int stateCount = 0; stateCount < state.length; stateCount++) {
-				Tile currentState = state[stateCount];
-				ArrayList<Tile> nextStateCandidates = new ArrayList<Tile>();
-				for (Integer[] neighbour : currentState.neighbours) {
-					Tile neighbourTile = boardCopy.tiles[neighbour[0]][neighbour[1]];
-					if (neighbourTile.unit[0] != (race + 1) &&
-						neighbourTile.unit[0] != (race + 2)) {
-						nextStateCandidates.add(neighbourTile);
-					}
-					else if(neighbourTile.unit[0] != 0 && 
-							neighbourTile.unit[0] != (race + 1)	&&
-							neighbourTile.unit[0] != (race + 2)) {
-						nextStateCandidates = new ArrayList<Tile>();
-						nextStateCandidates.add(neighbourTile);
-						break;
-					}
-				}
-				Tile nextState;
-				if (nextStateCandidates.size() > 0) {
-					nextState = nextStateCandidates.get(random.nextInt(nextStateCandidates.size()));
-				} else {
-					nextState = currentState;
-				}
-				nextStateList[strategyCount][stateCount] = moveAiChar(boardCopy, currentState, nextState);
+			try {
+				boardCopy = board.clone();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			Tile[] nextState = getNextStates(boardCopy, state, race);
+			for (int tilesInState = 0; tilesInState < nextState.length; tilesInState++) {
+				if(nextState[tilesInState].unit[0] != 0 && 
+					nextState[tilesInState].unit[0] != race + 1	&&
+					nextState[tilesInState].unit[0] != race + 2) {
+					nextStateList = new Tile[1][nextState.length];
+					nextStateList[0] = nextState;
+					return nextStateList;
+				}
+			}
+			nextStateList[strategyCount] = nextState;
 		}
 		return nextStateList;
+	}
+
+	public static Tile[] getNextStates(Board boardCopy, Tile[] state, int race) {
+		Random random = new Random();
+		Tile[] nextStates = new Tile[state.length];
+		for (int stateCount = 0; stateCount < state.length; stateCount++) {
+			Tile currentState = state[stateCount];
+			ArrayList<Tile> nextStateCandidates = new ArrayList<Tile>();
+			for (Integer[] neighbour : currentState.neighbours) {
+				Tile neighbourTile = boardCopy.tiles[neighbour[0]][neighbour[1]];
+				if(neighbourTile.unit[0] != 0 && 
+					neighbourTile.unit[0] == race + 1 &&
+					neighbourTile.unit[0] == race + 2) {
+					System.out.println("-------------------------------");
+					nextStateCandidates = new ArrayList<Tile>();
+					nextStateCandidates.add(neighbourTile);
+					break;
+				}
+				if (neighbourTile.unit[0] != race + 1 &&
+					neighbourTile.unit[0] != race + 2) {
+					nextStateCandidates.add(neighbourTile);
+				}
+			}
+			Tile nextState;
+			if (nextStateCandidates.size() > 0) {
+				nextState = nextStateCandidates.get(random.nextInt(nextStateCandidates.size()));
+			} else {
+				nextState = currentState;
+			}
+			nextStates[stateCount] = moveAiChar(boardCopy, currentState, nextState);
+		}
+		return nextStates;
 	}
 
 	public static void playerMove(Board board){
@@ -309,4 +362,28 @@ public class Movement {
 		if(t.unit[0] == 4) return("orc");
 		return("empty tile");
 	}
+
+	public static Integer[][] boardDrawData(Board board){
+        Integer[][] data = new Integer[9][9]; 
+        for (int j = 0; j<board.xMax+1; j++) {
+            for (int i = 0; i<board.tiles[j].length; i++) {
+                if(board.tiles[j][i] == null){
+                    continue;
+                } else {
+                    if (board.tiles[j][i].unit[0] == 1){
+                        data[j][i] = 1;
+                    }else if(board.tiles[j][i].unit[0] == 2){
+                        data[j][i] = 2;
+                    }else if(board.tiles[j][i].unit[0] == 3){
+                        data[j][i] = 3;
+                    }else if(board.tiles[j][i].unit[0] == 4){
+                        data[j][i] = 4;
+                    } else {
+                        data[j][i] = 0;
+                    }
+                }
+            }
+        }
+        return data;
+    }
 }

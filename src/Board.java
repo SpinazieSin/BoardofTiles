@@ -20,7 +20,6 @@ public class Board implements Cloneable{
         yMax = yMaxInt;
         yMin = yMinInt;
         int id = 0;
-
         int[] placeholderUnit = {0,0,0};
         // Create middle line
         for (int x = 0; x <= xMax; x++) {
@@ -74,14 +73,41 @@ public class Board implements Cloneable{
             for (int neighbourCount = 0; neighbourCount < tileListSize; neighbourCount++) {
                 int neighbourXCor = tileList.get(neighbourCount).xCor;
                 int neighbourYCor = tileList.get(neighbourCount).yCor;
-                if (tile.xCor + 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
-                    tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
-                    tile.xCor + 0 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
-                    tile.xCor + 0 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
-                    tile.xCor - 1 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
-                    tile.xCor - 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ) {
-                    Integer[] neighbourPosition = {neighbourXCor, neighbourYCor};
-                    neighbourList.add(neighbourPosition);
+                if (tile.yCor < yMin) {
+                    if (
+                        tile.xCor + 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                        tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ) {
+                        Integer[] neighbourPosition = {neighbourXCor, neighbourYCor};
+                        neighbourList.add(neighbourPosition);
+                    }
+                }
+                if (tile.yCor > yMin) {
+                    if (
+                        tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                        tile.xCor + 1 == neighbourXCor && tile.yCor - 1 == neighbourYCor) {
+                        Integer[] neighbourPosition = {neighbourXCor, neighbourYCor};
+                        neighbourList.add(neighbourPosition);
+                    }
+                }
+                if (tile.yCor == yMin) {
+                    if (
+                        tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
+                        tile.xCor - 1 == neighbourXCor && tile.yCor - 1 == neighbourYCor ||
+                        tile.xCor + 0 == neighbourXCor && tile.yCor - 1 == neighbourYCor) {
+                        Integer[] neighbourPosition = {neighbourXCor, neighbourYCor};
+                        neighbourList.add(neighbourPosition);
+                    }
                 }
             }
             Tile finalTile = new Tile(tile.xCor, tile.yCor, tile.unit, neighbourList);
@@ -90,7 +116,7 @@ public class Board implements Cloneable{
     }
 
     // Prints the coordinates of the neighbours of a tile
-    private void printNeighbours(Tile tile) {
+    public static void printNeighbours(Tile tile) {
         System.out.println("Neighbours of tile: " + tile.xCor + "," + tile.yCor);
         for (Integer[] neighbour : tile.neighbours) {
             System.out.println("x,y: " + neighbour[0] + "," + neighbour[1]);

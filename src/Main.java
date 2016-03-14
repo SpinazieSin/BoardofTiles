@@ -10,22 +10,36 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        for (int gameCount = 0; gameCount < 1000; gameCount++) {
+        for (int gameCount = 0; gameCount < 5; gameCount++) {
             Board board = buildBoard(8, 4, 4);
+            Movement.drawFrames = true; // comment this to disable drawing windows
+            if(Movement.drawFrames){
+                System.out.println("drawing frames enabled.");
+                JFrame fr = new JFrame();
+                fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+                Integer[][] data = Movement.boardDrawData(board);
+                drawing.Main frame = new drawing.Main(data);
+                Movement.f = fr;
+                fr.pack();
+                fr.setVisible(true);
+            }
             for (int i = 0; i < 100; i++) {
                 // printBoard(board);
-                // System.out.println("-----------Human Turn-----------");
-                Movement.reinforcedLearningMove(board, 0);
-                Movement.reinforcedLearningMove(board, 0);
-                // Movement.aiMove(board, 0);
+                System.out.println("-----------Human Turn-----------");
+                // Movement.reinforcedLearningMove(board, 0);
+                // Movement.reinforcedLearningMove(board, 0);
+                Movement.aiMove(board, 0);
                 // Movement.playerMove(board);
-                // System.out.println("-----------Greenskin------------");
+                System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);
+                // Movement.reinforcedLearningMove(board, 2);
+                // Movement.reinforcedLearningMove(board, 2);
                 try {
                     Thread.sleep(0);
                 } catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
+                breakCount++;
                 if (Board.gameWon(board) == -1) {
                     // Orcs won
                     balance-=1;
@@ -37,6 +51,7 @@ public class Main {
                     break;
                 }
             }
+            System.out.println("GAME");
         }
         // JFrame f = new JFrame();
         // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
