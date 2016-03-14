@@ -59,4 +59,25 @@ public class Combat {
 		}
 		return weaponSkill;
 	}
+
+	public static double relativeWeaponSkill(Board board) {
+		int humanCount = 0;
+		double orcCount = 0.0;
+		int humanSkill = 0;
+		double orcSkill = 0.0;
+		for (Tile[] tileList : board.tiles) {
+			for (Tile tile : tileList) {
+				if (tile == null) continue;
+				if (tile.unit[0] == 1 || tile.unit[0] == 2) {
+					humanSkill += calculateWeaponSkill(tile, board.tiles);
+					humanCount++;
+				} else if (tile.unit[0] == 3 || tile.unit[0] == 4) {
+					orcSkill += calculateWeaponSkill(tile, board.tiles);
+					orcCount++;
+				}
+			}
+		}
+
+		return ( (double)orcSkill / orcCount ) - ( (double)humanSkill / humanCount);
+	}
 }
