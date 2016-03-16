@@ -4,7 +4,7 @@ public class Learning {
 
 
 	// Board data
-	public static double[] learning = new double[999999];
+	public static double[] learning = new double[99999999];
 
 	public static Tile[] Learning(Board board, Tile[] states, Tile[][] newStates, int race) {
 		Double previousValue = 0.0;

@@ -10,8 +10,7 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        for (int gameCount = 0; gameCount < 10; gameCount++) {
-            Movement.drawFrames = true;
+        for (int gameCount = 0; gameCount < 100; gameCount++) {
             Board board = buildBoard(8, 4, 4);
             // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
@@ -35,11 +34,6 @@ public class Main {
                 Movement.aiMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
-                try {
-                    Thread.sleep(0);
-                } catch(InterruptedException ex) {  
-                    Thread.currentThread().interrupt();
-                }
                 breakCount++;
                 if (Board.gameWon(board) == -1) {
                     // Orcs won

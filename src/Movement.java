@@ -58,18 +58,17 @@ public class Movement {
 			// System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
-				System.out.println("Hit!");
+				// System.out.println("Hit!");
 				// if the unit that is hit has more than no hitpoints, do one damage
 				if (board.tiles[newPos.xCor][newPos.yCor].unit[1] > 1) {
 					board.tiles[newPos.xCor][newPos.yCor].unit[1]--;
-					System.out.println(newPos.xCor + ", "+newPos.yCor + " newhealth: " + board.tiles[newPos.xCor][newPos.yCor].unit[1]);
 				} else {
 					// if unit has one hitpoint and is hit, it dies
 					board.tiles[newPos.xCor][newPos.yCor].unit = emptyUnit;
-					System.out.println("it died");
+					// System.out.println("it died");
 				}
 			} else {
-				System.out.println("Missed..");
+				// System.out.println("Missed..");
 			}
 			return tile;
 		}
@@ -115,14 +114,14 @@ public class Movement {
 	     		for (int neighbourCount = 0; neighbourCount < neighbourListSize; neighbourCount++) {
 	     			Integer[] newCors = randomUnit.neighbours.get(randInt(0, neighbourListSize));
 	     			if (board.tiles[newCors[0]][newCors[1]].unit[0] != race + 1 &&
-	     				board.tiles[newCors[0]][newCors[1]].unit[0] != race + 2) {
-	     				newPos = board.tiles[newCors[0]][newCors[1]];
-	     			}
-	     			if (board.tiles[newCors[0]][newCors[1]].unit[0] != race + 1 &&
 	     				board.tiles[newCors[0]][newCors[1]].unit[0] != race + 2 &&
 	     				board.tiles[newCors[0]][newCors[1]].unit[0] != 0) {
 	     				newPos = board.tiles[newCors[0]][newCors[1]];
 	     				break;
+	     			}
+	     			if (board.tiles[newCors[0]][newCors[1]].unit[0] != race + 1 &&
+	     				board.tiles[newCors[0]][newCors[1]].unit[0] != race + 2) {
+	     				newPos = board.tiles[newCors[0]][newCors[1]];
 	     			}
 	     		}
 	     		if (newPos != randomUnit) {
@@ -161,8 +160,8 @@ public class Movement {
      	Tile[] unitsToMove;
      	while (!charList.isEmpty()) {
      		int characterAmount = charList.size();
-     		if (characterAmount > 3) {
-     			unitsToMove = new Tile[3];
+     		if (characterAmount > 4) {
+     			unitsToMove = new Tile[4];
      		}
      		else {
      			unitsToMove = new Tile[characterAmount];
@@ -199,8 +198,8 @@ public class Movement {
 	}
 
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
-		Tile[][] nextStateList = new Tile[100][state.length];
-		for (int strategyCount = 0; strategyCount < 100; strategyCount++) {
+		Tile[][] nextStateList = new Tile[400][state.length];
+		for (int strategyCount = 0; strategyCount < 400; strategyCount++) {
 			Board boardCopy = new Board(8,4,4);
 			boardCopy = Board.deepCloneBoard(board);
 			Tile[] nextState = getNextStates(boardCopy, state, race);
