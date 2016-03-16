@@ -129,7 +129,6 @@ public class Board implements Cloneable{
 
     // returns 0 if no player has won, 1 if humans win and 2 if orcs win.
     public static int gameWon(Board board) {
-        int tilecounter = 0;
         int swordsmancounter = 0;
         int goblincounter = 0;
         int orccounter = 0;
@@ -138,18 +137,11 @@ public class Board implements Cloneable{
             for (int i = 0; i<board.tiles[j].length; i++) {
                 if(board.tiles[j][i] == null){
                     continue;
-                } else {
-                    tilecounter ++;
-                    if(board.tiles[j][i].unit[0] == 1) {
-                        swordsmancounter++;
-
-                    }
-                    if(board.tiles[j][i].unit[0] == 2) generalcounter++;
-                    if(board.tiles[j][i].unit[0] == 3) goblincounter++;
-                    if(board.tiles[j][i].unit[0] == 4) orccounter++;
-
                 }
-
+                if(board.tiles[j][i].unit[0] == 1) swordsmancounter++;
+                if(board.tiles[j][i].unit[0] == 2) generalcounter++;
+                if(board.tiles[j][i].unit[0] == 3) goblincounter++;
+                if(board.tiles[j][i].unit[0] == 4) orccounter++;
             }
         }
         // System.out.println("swordsman " + swordsmancounter);
@@ -159,11 +151,12 @@ public class Board implements Cloneable{
 
         if(swordsmancounter == 0 && generalcounter == 0){
             return(-1);
-        } else if(goblincounter == 0 && orccounter == 0){
-            return(1);
-        } else {
-            return(0);
         }
+        if(goblincounter == 0 && orccounter == 0){
+            return(1);
+        }
+        return(0);
+        
     }
 
     public static Board deepCloneBoard(Board board) {

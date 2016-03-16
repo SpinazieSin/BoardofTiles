@@ -24,8 +24,7 @@ public class Main {
                 fr.setVisible(true);
             }
             String victor = "unknown, something went wrong...";
-            for (int i = 0; i < 100; i++) {
-                // printBoard(board);
+            for (int i = 0; i < 1000; i++) { // after 10K moves something is clearly wrong
                 // System.out.println("-----------Human Turn-----------");
                 // Movement.reinforcedLearningMove(board, 0);
                 // Movement.reinforcedLearningMove(board, 0);
