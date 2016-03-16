@@ -135,7 +135,7 @@ public class Main extends JPanel {
                 g.drawImage(swordsman, x - 40, y - 45, null);
                 String health = Integer.toString(data[xCor][yCor][1]);
                 g.setColor(new Color(0x9f0303));
-                g.drawString("❤ : " + health, x - 25, y + 30);
+                g.drawString("❤: " + health, x - 25, y + 30);
             }
             if(data[xCor][yCor][0] == 3) {
                 g.drawImage(goblin, x - 40, y - 45, null);
