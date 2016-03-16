@@ -129,7 +129,7 @@ public class Main extends JPanel {
         g.drawString(text, x - w/2, y + h/2);
         g.setColor(new Color(0xffffff));
         g.drawString(character, x - w/2, y + h/2);
-        if(xCor < data.length && yCor < data[xCor].length && data[xCor][yCor] != null){
+        if(xCor < data[xCor].length && yCor < data[yCor].length && data[xCor][yCor] != null){
             if(data[xCor][yCor][0] == 1){
                 g.drawImage(swordsman, x - 40, y - 45, null);
                 String health = Integer.toString(data[xCor][yCor][1]);
@@ -155,7 +155,6 @@ public class Main extends JPanel {
                 g.drawString("❤: " + health, x - 25, y + 30);
             }
         }
-
     }
 
     private String coord(int value) {

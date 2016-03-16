@@ -53,7 +53,7 @@ public class Movement {
 			return newPos;
 		// Hit unit if tile not empty
 		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
-			if(drawFrames) System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
+			if(drawFrames) System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking " + getUnitName(newPos) + " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				if(drawFrames) System.out.println("Hit!");
 				// if the unit that is hit has more than no hitpoints, do one damage
@@ -248,7 +248,7 @@ public class Movement {
 		return nextStates;
 	}
 
-	public static void playerMove(Board board){
+	public static void playerMove(Board board, int race){
 		// list of board locations/characters that need to be moved
 		ArrayList<Tile> charList = new ArrayList<Tile>();
 		for (int j = 0; j<board.xMax+1; j++) {
@@ -256,8 +256,8 @@ public class Movement {
      			if(board.tiles[j][i] == null){
      				continue;
      			} else {
-     				if (board.tiles[j][i].unit[0] == 1 ||
-     					board.tiles[j][i].unit[0] == 2){
+     				if (board.tiles[j][i].unit[0] == race + 1 ||
+     					board.tiles[j][i].unit[0] == race + 2){
      					Tile movetile = new Tile(board.tiles[j][i].xCor, board.tiles[j][i].yCor, board.tiles[j][i].unit, board.tiles[j][i].neighbours);
      					charList.add(movetile);
      					charList.add(movetile);

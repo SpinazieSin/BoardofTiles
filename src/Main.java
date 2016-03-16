@@ -10,41 +10,47 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        for (int gameCount = 0; gameCount < 25; gameCount++) {
+        for (int gameCount = 0; gameCount < 1000; gameCount++) {
             Board board = buildBoard(8, 4, 4);
-            // Movement.drawFrames = true; // comment this to disable drawing windows
+            // if(gameCount == 990) Movement.drawFrames = true;
+            Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
+                try {
+                    fr.setAutoRequestFocus(false);
+                }catch(ArrayIndexOutOfBoundsException e) {
+                }
                 fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
                 Integer[][][] data = Movement.boardDrawData(board);
                 drawing.Main frame = new drawing.Main(data);
-                Movement.f = fr;
                 fr.pack();
                 fr.setVisible(true);
+                Movement.f = fr;
             }
             String victor = "unknown, something went wrong...";
-            for (int i = 0; i < 1000; i++) { // after 10K moves something is clearly wrong
-                // System.out.println("-----------Human Turn-----------");
+            for (int i = 0; i < 1000; i++) { // after 1000 moves something is clearly wrong
+                System.out.println("-----------Human Turn-----------");
                 // Movement.reinforcedLearningMove(board, 0);
                 // Movement.reinforcedLearningMove(board, 0);
                 Movement.aiMove(board, 0);
-                // Movement.playerMove(board);
-                // System.out.println("-----------Greenskin------------");
+                // Movement.playerMove(board, 0);
+                System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);
+                // Movement.playerMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 breakCount++;
                 if (Board.gameWon(board) == -1) {
                     // Orcs won
                     victor = "Orcs";
-                    balance-=1;
+                    balance--;
                     break;
                 }
                 if (Board.gameWon(board) == 1) {
                     // Humans won
                     victor = "Humans";
-                    balance+=1;
+                    balance++;
                     break;
                 }
             }
