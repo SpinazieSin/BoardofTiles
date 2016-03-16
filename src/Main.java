@@ -12,7 +12,7 @@ public class Main {
         int breakCount = 0;
         for (int gameCount = 0; gameCount < 10; gameCount++) {
             Board board = buildBoard(8, 4, 4);
-            Movement.drawFrames = true; // comment this to disable drawing windows
+            // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
@@ -31,9 +31,9 @@ public class Main {
                 // Movement.aiMove(board, 0);
                 // Movement.playerMove(board);
                 System.out.println("-----------Greenskin------------");
-                Movement.aiMove(board, 2);
-                // Movement.reinforcedLearningMove(board, 2);
-                // Movement.reinforcedLearningMove(board, 2);
+                // Movement.aiMove(board, 2);
+                Movement.reinforcedLearningMove(board, 2);
+                Movement.reinforcedLearningMove(board, 2);
                 try {
                     Thread.sleep(0);
                 } catch(InterruptedException ex) {
