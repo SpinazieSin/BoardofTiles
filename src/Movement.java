@@ -25,7 +25,7 @@ public class Movement {
 			// System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 		// Hit unit if tile not empty
 		} else{
-			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
+			System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
@@ -53,7 +53,7 @@ public class Movement {
 			return newPos;
 		// Hit unit if tile not empty
 		} else{
-			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
+			System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
@@ -116,7 +116,7 @@ public class Movement {
 				        f.setVisible(true);
 				    }
                     try {
-	                    Thread.sleep(400);
+	                    if(drawFrames) Thread.sleep(200);
 	                } catch(InterruptedException ex) {
 	                    Thread.currentThread().interrupt();
 	                }
@@ -177,7 +177,7 @@ public class Movement {
 		        f.setVisible(true);
 		    }
 		    try {
-                Thread.sleep(500);
+                if(drawFrames) Thread.sleep(200);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -242,6 +242,7 @@ public class Movement {
 
 	public static void playerMove(Board board){
 		// list of board locations/characters that need to be moved
+
 		ArrayList<Tile> charList = new ArrayList<Tile>();
 		for (int j = 0; j<board.xMax+1; j++) {
      		for (int i = 0; i<board.tiles[j].length; i++) {
@@ -250,13 +251,18 @@ public class Movement {
      			} else {
      				if (board.tiles[j][i].unit[0] == 1 ||
      					board.tiles[j][i].unit[0] == 2){
-     					charList.add(board.tiles[j][i]);
-     					charList.add(board.tiles[j][i]);
+     					Tile movetile = new Tile(board.tiles[j][i].xCor, board.tiles[j][i].yCor, board.tiles[j][i].unit, board.tiles[j][i].neighbours);
+     					charList.add(movetile);
+     					charList.add(movetile);
      				}
      			}
      		}
      	}
      	while(!charList.isEmpty()){
+     		Integer[][] newdata = boardDrawData(board);
+			f.setContentPane(new drawing.Main(newdata));
+	        f.pack();
+	        f.setVisible(true);
 	     	Scanner scan = new Scanner(System.in);
 			int oldXCor = 0;
 			int oldYCor = 0;
@@ -266,36 +272,36 @@ public class Movement {
 			while(true) {
 				try {
 					Main.printBoard(board);
-					// System.out.println("characters to move: ");
+					System.out.println("characters to move: ");
 					Set<Tile> charHash = new HashSet<>();
 					charHash.addAll(charList);
 			     	for(Tile charTile : charHash){
-			     		// System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]");
+			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]");
 			     	}
-					// System.out.println("Please select a character to move.");	
+					System.out.println("Please select a character to move.");	
 					String selectUnit = scan.nextLine();
 					oldXCor = Character.getNumericValue(selectUnit.charAt(0));
 					oldYCor = Character.getNumericValue(selectUnit.charAt(2));
 					if (!isExistingTile(oldXCor, oldYCor, charList)) {
-						// System.out.println("Not a unit, use x and y coordinates seperated by a ,");
+						System.out.println("Not a unit, use x and y coordinates seperated by a ,");
 						continue;
 					}
-					// System.out.println("Please select where you want to move it.");
-					// System.out.print("possible moves: ");
+					System.out.println("Please select where you want to move it.");
+					System.out.print("possible moves: ");
 					for(Integer[] neighbour : board.tiles[oldXCor][oldYCor].neighbours){
-						// System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
+						System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
 					}
-					// System.out.println("");
+					System.out.println("");
 					String newPosition = scan.nextLine();
 					newXCor = Character.getNumericValue(newPosition.charAt(0));
 					newYCor = Character.getNumericValue(newPosition.charAt(2));
 					if (!isExistingNeighbour(newXCor, newYCor, board.tiles[oldXCor][oldYCor].neighbours)) {
-						// System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
+						System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
 						continue;
 					}
 					break;
 				} catch(Exception e) {
-					// System.out.println("Bad input, please give x and y coordinates seperated by a ,");
+					System.out.println("Bad input, please give x and y coordinates seperated by a ,");
 					continue;
 				}
 			}
