@@ -26,12 +26,13 @@ public class Movement {
 			// System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 		// Hit unit if tile not empty
 		} else { 
-			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
+			System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
 				// if the unit that is hit has more than no hitpoints, do one damage
-				if (hitUnit[1] > 0) hitUnit[1] = hitUnit[1]-1;
+				// if (hitUnit[1] > 1) hitUnit[1] = hitUnit[1]-1;
+				if (board.tiles[newPos.xCor][newPos.yCor].unit[1] > 1) board.tiles[newPos.xCor][newPos.yCor].unit[1]--;
 				// if unit has one hitpoint and is hit, it dies
 				else {
 					hitUnit = emptyUnit;
@@ -57,15 +58,18 @@ public class Movement {
 			System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				System.out.println("Hit!");
-				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
+				// int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
 				// if the unit that is hit has more than no hitpoints, do one damage
-				if (hitUnit[1] > 0) hitUnit[1] = hitUnit[1]-1;
+				// if (hitUnit[1] > 1) hitUnit[1] = hitUnit[1]-1;
+				if (board.tiles[newPos.xCor][newPos.yCor].unit[1] > 1) {
+					board.tiles[newPos.xCor][newPos.yCor].unit[1]--;
+					System.out.println(newPos.xCor + ", "+newPos.yCor + "newhealth: " + board.tiles[newPos.xCor][newPos.yCor].unit[1]);
+				} else {
 				// if unit has one hitpoint and is hit, it dies
-				else {
-					hitUnit = emptyUnit;
+					board.tiles[newPos.xCor][newPos.yCor].unit = emptyUnit;
 					System.out.println("it died");
 				}
-				board.tiles[newPos.xCor][newPos.yCor].unit = hitUnit;
+				// board.tiles[newPos.xCor][newPos.yCor].unit = hitUnit;
 			} else {
 				System.out.println("Missed..");
 			}
@@ -268,7 +272,7 @@ public class Movement {
 					Set<Tile> charHash = new HashSet<>();
 					charHash.addAll(charList);
 			     	for(Tile charTile : charHash){
-			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]" + " HP: " + charTile.unit[1]);
+			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]" + " HP: " + board.tiles[charTile.xCor][charTile.yCor].unit[1]);
 			     	}
 					System.out.println("Please select a character to move.");	
 					String selectUnit = scan.nextLine();
@@ -374,15 +378,17 @@ public class Movement {
                         data[j][i][2] = 6;
                     }else if(board.tiles[j][i].unit[0] == 2){
                         data[j][i][0] = 2;
-                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
+                        data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 8;
                     }else if(board.tiles[j][i].unit[0] == 3){
                         data[j][i][0] = 3;
-                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
+                        // System.out.println("health for "+ getUnitName(board.tiles[j][i]) + ": "+ board.tiles[j][i].unit[1]);
+                        data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 4;
                     }else if(board.tiles[j][i].unit[0] == 4){
                         data[j][i][0] = 4;
-                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
+                        // System.out.println("health for "+ getUnitName(board.tiles[j][i]) + board.tiles[j][i].unit[1]);
+                        data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 8;
                     } else {
                         data[j][i][0] = 0;
