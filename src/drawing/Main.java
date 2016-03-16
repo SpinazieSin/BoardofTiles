@@ -16,12 +16,12 @@ public class Main extends JPanel {
     private int id = 0;
     private int xCor = 4;
     private int yCor = 8;
-    private Integer[][] data;
+    private Integer[][][] data;
 
     private Font font = new Font("Arial", Font.BOLD, 18);
     FontMetrics metrics;
 
-    public Main(Integer[][] dataIn) {
+    public Main(Integer[][][] dataIn) {
         data = dataIn;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
@@ -128,17 +128,29 @@ public class Main extends JPanel {
         g.setColor(new Color(0xffffff));
         g.drawString(character, x - w/2, y + h/2);
         if(xCor < data.length && yCor < data[xCor].length && data[xCor][yCor] != null){
-            if(data[xCor][yCor] == 1){
+            if(data[xCor][yCor][0] == 1){
                 g.drawImage(swordsman, x - 40, y - 45, null);
+                String health = Integer.toString(data[xCor][yCor][1]);
+                g.setColor(new Color(0x9f0303));
+                g.drawString("❤ : " + health, x - 25, y + 30);
             }
-            if(data[xCor][yCor] == 3) {
+            if(data[xCor][yCor][0] == 3) {
                 g.drawImage(goblin, x - 40, y - 45, null);
+                String health = Integer.toString(data[xCor][yCor][1]);
+                g.setColor(new Color(0x9f0303));
+                g.drawString("❤: " + health, x - 25, y + 30);
             }
-            if(data[xCor][yCor] == 2) {
+            if(data[xCor][yCor][0] == 2) {
                 g.drawImage(general, x - 40, y - 45, null);
+                String health = Integer.toString(data[xCor][yCor][1]);
+                g.setColor(new Color(0x9f0303));
+                g.drawString("❤: " + health, x - 25, y + 30);
             }
-            if(data[xCor][yCor] == 4) {
+            if(data[xCor][yCor][0] == 4) {
                 g.drawImage(orc, x - 40, y - 45, null);
+                String health = Integer.toString(data[xCor][yCor][1]);
+                g.setColor(new Color(0x9f0303));
+                g.drawString("❤: " + health, x - 25, y + 30);
             }
         }
 

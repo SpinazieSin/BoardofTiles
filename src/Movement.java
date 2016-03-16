@@ -85,7 +85,8 @@ public class Movement {
      			} else {
      				if (board.tiles[j][i].unit[0] == race + 1 ||
      					board.tiles[j][i].unit[0] == race + 2){
-     					charList.add(board.tiles[j][i]);
+     					Tile movetile = new Tile(board.tiles[j][i].xCor, board.tiles[j][i].yCor, board.tiles[j][i].unit, board.tiles[j][i].neighbours);
+     					charList.add(movetile);
      				}
      			}
      		}
@@ -112,7 +113,7 @@ public class Movement {
 	     		if (newPos != randomUnit) {
 	     			randomUnit = moveAiChar(board, randomUnit, newPos);
 	     			if(drawFrames){
-						Integer[][] newdata = boardDrawData(board);
+						Integer[][][] newdata = boardDrawData(board);
 						f.setContentPane(new drawing.Main(newdata));
 				        f.pack();
 				        f.setVisible(true);
@@ -136,7 +137,8 @@ public class Movement {
      			} else {
      				if (board.tiles[j][i].unit[0] == race + 1 ||
      					board.tiles[j][i].unit[0] == race + 2){
-     					charList.add(board.tiles[j][i]);
+     					Tile movetile = new Tile(board.tiles[j][i].xCor, board.tiles[j][i].yCor, board.tiles[j][i].unit, board.tiles[j][i].neighbours);
+     					charList.add(movetile);
      				}
      			}
      		}
@@ -172,7 +174,7 @@ public class Movement {
                 Thread.currentThread().interrupt();
             }
 			if(drawFrames){
-				Integer[][] newdata = boardDrawData(board);
+				Integer[][][] newdata = boardDrawData(board);
 				f.setContentPane(new drawing.Main(newdata));
 		        f.pack();
 		        f.setVisible(true);
@@ -249,7 +251,7 @@ public class Movement {
      		}
      	}
      	while(!charList.isEmpty()){
-     		Integer[][] newdata = boardDrawData(board);
+     		Integer[][][] newdata = boardDrawData(board);
 			f.setContentPane(new drawing.Main(newdata));
 	        f.pack();
 	        f.setVisible(true);
@@ -266,7 +268,7 @@ public class Movement {
 					Set<Tile> charHash = new HashSet<>();
 					charHash.addAll(charList);
 			     	for(Tile charTile : charHash){
-			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]");
+			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]" + " HP: " + charTile.unit[1]);
 			     	}
 					System.out.println("Please select a character to move.");	
 					String selectUnit = scan.nextLine();
@@ -359,23 +361,33 @@ public class Movement {
 		return("empty tile");
 	}
 
-	public static Integer[][] boardDrawData(Board board){
-        Integer[][] data = new Integer[9][9]; 
+	public static Integer[][][] boardDrawData(Board board){
+        Integer[][][] data = new Integer[9][9][3]; 
         for (int j = 0; j<board.xMax+1; j++) {
             for (int i = 0; i<board.tiles[j].length; i++) {
                 if(board.tiles[j][i] == null){
                     continue;
                 } else {
                     if (board.tiles[j][i].unit[0] == 1){
-                        data[j][i] = 1;
+                        data[j][i][0] = 1;
+                        data[j][i][1] = 4;
+                        data[j][i][2] = 6;
                     }else if(board.tiles[j][i].unit[0] == 2){
-                        data[j][i] = 2;
+                        data[j][i][0] = 2;
+                        data[j][i][1] = 5;
+                        data[j][i][2] = 8;
                     }else if(board.tiles[j][i].unit[0] == 3){
-                        data[j][i] = 3;
+                        data[j][i][0] = 3;
+                        data[j][i][1] = 3;
+                        data[j][i][2] = 4;
                     }else if(board.tiles[j][i].unit[0] == 4){
-                        data[j][i] = 4;
+                        data[j][i][0] = 4;
+                        data[j][i][1] = 10;
+                        data[j][i][2] = 8;
                     } else {
-                        data[j][i] = 0;
+                        data[j][i][0] = 0;
+                        data[j][i][1] = 0;
+                        data[j][i][2] = 0;
                     }
                 }
             }

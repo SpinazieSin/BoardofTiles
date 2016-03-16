@@ -12,12 +12,12 @@ public class Main {
         int breakCount = 0;
         for (int gameCount = 0; gameCount < 10; gameCount++) {
             Board board = buildBoard(8, 4, 4);
-            // Movement.drawFrames = true; // comment this to disable drawing windows
+            Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
                 fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-                Integer[][] data = Movement.boardDrawData(board);
+                Integer[][][] data = Movement.boardDrawData(board);
                 drawing.Main frame = new drawing.Main(data);
                 Movement.f = fr;
                 fr.pack();
@@ -26,10 +26,10 @@ public class Main {
             for (int i = 0; i < 100; i++) {
                 // printBoard(board);
                 System.out.println("-----------Human Turn-----------");
-                Movement.reinforcedLearningMove(board, 0);
-                Movement.reinforcedLearningMove(board, 0);
+                // Movement.reinforcedLearningMove(board, 0);
+                // Movement.reinforcedLearningMove(board, 0);
                 // Movement.aiMove(board, 0);
-                // Movement.playerMove(board);
+                Movement.playerMove(board);
                 System.out.println("-----------Greenskin------------");
                 // Movement.aiMove(board, 2);
                 Movement.reinforcedLearningMove(board, 2);
@@ -182,29 +182,5 @@ public class Main {
         }
         outputWriter.flush();  
         outputWriter.close();  
-    }
-
-    private static Integer[][] boardDrawData(Board board){
-        Integer[][] data = new Integer[9][9]; 
-        for (int j = 0; j<board.xMax+1; j++) {
-            for (int i = 0; i<board.tiles[j].length; i++) {
-                if(board.tiles[j][i] == null){
-                    continue;
-                } else {
-                    if (board.tiles[j][i].unit[0] == 1){
-                        data[j][i] = 1;
-                    }else if(board.tiles[j][i].unit[0] == 2){
-                        data[j][i] = 2;
-                    }else if(board.tiles[j][i].unit[0] == 3){
-                        data[j][i] = 3;
-                    }else if(board.tiles[j][i].unit[0] == 4){
-                        data[j][i] = 4;
-                    } else {
-                        data[j][i] = 0;
-                    }
-                }
-            }
-        }
-        return data;
     }
 }
