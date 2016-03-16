@@ -116,10 +116,14 @@ public class Board implements Cloneable{
     }
 
     // Prints the coordinates of the neighbours of a tile
-    public static void printNeighbours(Tile tile) {
+    public static void printNeighbours(Tile tile, Board board) {
         System.out.println("Neighbours of tile: " + tile.xCor + "," + tile.yCor);
         for (Integer[] neighbour : tile.neighbours) {
-            System.out.println("x,y: " + neighbour[0] + "," + neighbour[1]);
+            Tile unit = board.tiles[neighbour[0]][neighbour[1]];
+            System.out.println("x,y: " + 
+                                unit.xCor + "," + 
+                                unit.yCor + " - " + 
+                                Movement.getUnitName(unit));
         }
     }
 
@@ -160,5 +164,19 @@ public class Board implements Cloneable{
         } else {
             return(0);
         }
+    }
+
+    public static Board deepCloneBoard(Board board) {
+        Board boardClone = new Board(8,4,4);
+        for (int i = 0; i < board.tiles.length; i++) {
+            for (int j = 0; j < board.tiles[i].length; j++) {
+                if (board.tiles[i][j] == null) continue;
+                boardClone.tiles[i][j] = Tile.cloneTile(board.tiles[i][j].xCor, 
+                                                        board.tiles[i][j].yCor,
+                                                        board.tiles[i][j].unit,
+                                                        board.tiles[i][j].neighbours);
+            }
+        }
+        return boardClone;
     }
 }

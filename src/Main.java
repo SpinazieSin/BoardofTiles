@@ -10,7 +10,7 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        for (int gameCount = 0; gameCount < 5; gameCount++) {
+        for (int gameCount = 0; gameCount < 10; gameCount++) {
             Board board = buildBoard(8, 4, 4);
             Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
@@ -26,9 +26,9 @@ public class Main {
             for (int i = 0; i < 100; i++) {
                 // printBoard(board);
                 System.out.println("-----------Human Turn-----------");
-                // Movement.reinforcedLearningMove(board, 0);
-                // Movement.reinforcedLearningMove(board, 0);
-                Movement.aiMove(board, 0);
+                Movement.reinforcedLearningMove(board, 0);
+                Movement.reinforcedLearningMove(board, 0);
+                // Movement.aiMove(board, 0);
                 // Movement.playerMove(board);
                 System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);

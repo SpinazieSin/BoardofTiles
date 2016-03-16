@@ -1,7 +1,6 @@
 import java.util.*;
 
 public class Tile {
-        
     // the Tile
     // three fields
     public int xCor;
@@ -16,5 +15,10 @@ public class Tile {
         xCor = xCorInput;
         yCor = yCorInput;
         unit = unitInput;
-    }  
+    }
+
+    public static Tile cloneTile(int xCorInput, int yCorInput, int[] unitInput, ArrayList<Integer[]> neighbourList) {
+        Tile clonedTile = new Tile(xCorInput, yCorInput, unitInput, neighbourList);
+        return clonedTile;
+    }
 }

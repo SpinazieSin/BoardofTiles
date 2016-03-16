@@ -20,11 +20,12 @@ public class Movement {
 		int[] emptyUnit = {0,0,0};
 		// Do we move to an empty tile?
 		if (board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
+			newPos.unit = emptyUnit;
 			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
-			board.tiles[tile.xCor][tile.yCor].unit = emptyUnit;
+			board.tiles[tile.xCor][tile.yCor].unit = newPos.unit;
 			// System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 		// Hit unit if tile not empty
-		} else{
+		} else { 
 			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
@@ -52,8 +53,8 @@ public class Movement {
 			// System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 			return newPos;
 		// Hit unit if tile not empty
-		} else{
-			// System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
+		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
+			System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
@@ -70,6 +71,7 @@ public class Movement {
 			}
 			return tile;
 		}
+		return tile;
 	}
 
 	public static void aiMove(Board board, int race) {
@@ -116,7 +118,7 @@ public class Movement {
 				        f.setVisible(true);
 				    }
                     try {
-	                    Thread.sleep(400);
+	                    Thread.sleep(300);
 	                } catch(InterruptedException ex) {
 	                    Thread.currentThread().interrupt();
 	                }
@@ -159,40 +161,29 @@ public class Movement {
 
 	public static void createNewMove(Board board, Tile[] unitsToMove, int race) {
 		Tile[][] nextStates = getPossibleStates(board, unitsToMove, race);
-		Board boardCopy = board;
-		try {
-			boardCopy = board.clone();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Tile[] nextState = Learning.Learning(boardCopy, unitsToMove, nextStates, race);
+		// Board boardCopy = Board.deepCloneBoard(board);
+		Tile[] nextState = Learning.Learning(board, unitsToMove, nextStates, race);
 		int xCor = nextState[0].xCor;
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
-			Board.printNeighbours(unitsToMove[unitCount]);
-			moveChar(board, unitsToMove[unitCount], nextState[unitCount]);
+			moveAiChar(board, unitsToMove[unitCount], nextState[unitCount]);
+		    try {
+                Thread.sleep(300);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
 			if(drawFrames){
 				Integer[][] newdata = boardDrawData(board);
 				f.setContentPane(new drawing.Main(newdata));
 		        f.pack();
 		        f.setVisible(true);
 		    }
-		    try {
-                Thread.sleep(500);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
 		}
 	}
 
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
-		Tile[][] nextStateList = new Tile[125][state.length];
-		for (int strategyCount = 0; strategyCount < 125; strategyCount++) {
-			Board boardCopy = board;
-			try {
-				boardCopy = board.clone();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		Tile[][] nextStateList = new Tile[100][state.length];
+		for (int strategyCount = 0; strategyCount < 100; strategyCount++) {
+			Board boardCopy = Board.deepCloneBoard(board);
 			Tile[] nextState = getNextStates(boardCopy, state, race);
 			for (int tilesInState = 0; tilesInState < nextState.length; tilesInState++) {
 				if(nextState[tilesInState].unit[0] != 0 && 
@@ -217,9 +208,8 @@ public class Movement {
 			for (Integer[] neighbour : currentState.neighbours) {
 				Tile neighbourTile = boardCopy.tiles[neighbour[0]][neighbour[1]];
 				if(neighbourTile.unit[0] != 0 && 
-					neighbourTile.unit[0] == race + 1 &&
-					neighbourTile.unit[0] == race + 2) {
-					System.out.println("-------------------------------");
+					neighbourTile.unit[0] != race + 1 &&
+					neighbourTile.unit[0] != race + 2) {
 					nextStateCandidates = new ArrayList<Tile>();
 					nextStateCandidates.add(neighbourTile);
 					break;
@@ -230,12 +220,12 @@ public class Movement {
 				}
 			}
 			Tile nextState;
-			if (nextStateCandidates.size() > 0) {
+			if (!nextStateCandidates.isEmpty()) {
 				nextState = nextStateCandidates.get(random.nextInt(nextStateCandidates.size()));
 			} else {
 				nextState = currentState;
 			}
-			nextStates[stateCount] = moveAiChar(boardCopy, currentState, nextState);
+			nextStates[stateCount] = nextState;
 		}
 		return nextStates;
 	}
@@ -302,7 +292,7 @@ public class Movement {
 			Tile selectedUnit = board.tiles[oldXCor][oldYCor];
 			Tile newPos = board.tiles[newXCor][newYCor];
 
-			moveChar(board, selectedUnit, newPos);
+			moveAiChar(board, selectedUnit, newPos);
 
 			ArrayList<Tile> doublemovecheck = new ArrayList<Tile>();
 			for(int i = 0; i< charList.size(); i++){
@@ -355,7 +345,7 @@ public class Movement {
 		return false;
 	}
 
-	private static String getUnitName(Tile t) {
+	public static String getUnitName(Tile t) {
 		if(t.unit[0] == 1) return("swordsman");
 		if(t.unit[0] == 2) return("general");
 		if(t.unit[0] == 3) return("goblin");
