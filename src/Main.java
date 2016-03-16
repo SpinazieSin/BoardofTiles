@@ -11,8 +11,9 @@ public class Main {
         // Gameloop
         int breakCount = 0;
         for (int gameCount = 0; gameCount < 10; gameCount++) {
+            Movement.drawFrames = true;
             Board board = buildBoard(8, 4, 4);
-            Movement.drawFrames = true; // comment this to disable drawing windows
+            // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
@@ -25,18 +26,18 @@ public class Main {
             }
             for (int i = 0; i < 100; i++) {
                 // printBoard(board);
-                System.out.println("-----------Human Turn-----------");
-                // Movement.reinforcedLearningMove(board, 0);
-                // Movement.reinforcedLearningMove(board, 0);
-                Movement.aiMove(board, 0);
+                // System.out.println("-----------Human Turn-----------");
+                Movement.reinforcedLearningMove(board, 0);
+                Movement.reinforcedLearningMove(board, 0);
+                // Movement.aiMove(board, 0);
                 // Movement.playerMove(board);
-                System.out.println("-----------Greenskin------------");
+                // System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 try {
                     Thread.sleep(0);
-                } catch(InterruptedException ex) {
+                } catch(InterruptedException ex) {  
                     Thread.currentThread().interrupt();
                 }
                 breakCount++;
@@ -51,7 +52,7 @@ public class Main {
                     break;
                 }
             }
-            System.out.println("GAME");
+            System.out.println("GAME - " + gameCount);
         }
         // JFrame f = new JFrame();
         // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -130,32 +131,47 @@ public class Main {
     }
 
     public static void initUnits(Board board) {
-        int[] orc = {4, 10, 8};
-        int[] goblin = {3, 3, 4};
-        int[] general = {2, 5, 8};
-        int[] swordsman = {1, 4, 6};
+        int[] orc1 = {4, 10, 8};
+        int[] orc2 = {4, 10, 8};
+        int[] goblin1 = {3, 3, 4};
+        int[] goblin2 = {3, 3, 4};
+        int[] goblin3 = {3, 3, 4};
+        int[] goblin4 = {3, 3, 4};
+        int[] goblin5 = {3, 3, 4};
+        int[] goblin6 = {3, 3, 4};
+        int[] goblin7 = {3, 3, 4};
+        int[] goblin8 = {3, 3, 4};
+        int[] general1 = {2, 5, 8};
+        int[] general2 = {2, 5, 8};
+        int[] general3 = {2, 5, 8};
+        int[] swordsman1 = {1, 4, 6};
+        int[] swordsman2 = {1, 4, 6};
+        int[] swordsman3 = {1, 4, 6};
+        int[] swordsman4 = {1, 4, 6};
+        int[] swordsman5 = {1, 4, 6};
+        int[] swordsman6 = {1, 4, 6};
         //Initialize Greenskin side
-        board.tiles[8][4].unit = orc;
-        board.tiles[3][8].unit = orc;
-        board.tiles[7][4].unit = goblin;
-        board.tiles[7][3].unit = goblin;
-        board.tiles[6][2].unit = goblin;
-        board.tiles[6][5].unit = goblin;
-        board.tiles[5][5].unit = goblin;
-        board.tiles[5][7].unit = goblin;
-        board.tiles[4][7].unit = goblin;
-        board.tiles[3][7].unit = goblin;
+        board.tiles[8][4].unit = orc1;
+        board.tiles[3][8].unit = orc2;
+        board.tiles[7][4].unit = goblin1;
+        board.tiles[7][3].unit = goblin2;
+        board.tiles[6][2].unit = goblin3;
+        board.tiles[6][5].unit = goblin4;
+        board.tiles[5][5].unit = goblin5;
+        board.tiles[5][7].unit = goblin6;
+        board.tiles[4][7].unit = goblin7;
+        board.tiles[3][7].unit = goblin8;
 
         // Initialize Human side
-        board.tiles[0][4].unit = general;
-        board.tiles[0][1].unit = general;
-        board.tiles[1][0].unit = general;
-        board.tiles[0][5].unit = swordsman;
-        board.tiles[0][3].unit = swordsman;
-        board.tiles[1][4].unit = swordsman;
-        board.tiles[1][3].unit = swordsman;
-        board.tiles[1][2].unit = swordsman;
-        board.tiles[1][1].unit = swordsman;
+        board.tiles[0][4].unit = general1;
+        board.tiles[0][1].unit = general2;
+        board.tiles[1][0].unit = general3;
+        board.tiles[0][5].unit = swordsman1;
+        board.tiles[0][3].unit = swordsman2;
+        board.tiles[1][4].unit = swordsman3;
+        board.tiles[1][3].unit = swordsman4;
+        board.tiles[1][2].unit = swordsman5;
+        board.tiles[1][1].unit = swordsman6;
     }
 
     private static String getUnitName(int index){

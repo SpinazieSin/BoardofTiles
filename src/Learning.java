@@ -38,7 +38,8 @@ public class Learning {
 
 	private static Board getNewBoard(Board boardCopy, Tile[] currentState, Tile[] newState, int race) {
 		for (int moveCount = 0; moveCount < newState.length; moveCount++) {
-			Movement.moveAiChar(boardCopy, currentState[moveCount], newState[moveCount]);
+			Tile movetile = new Tile(currentState[moveCount].xCor, currentState[moveCount].yCor, currentState[moveCount].unit, currentState[moveCount].neighbours);
+			Movement.moveAiChar(boardCopy, movetile, newState[moveCount]);
 		}
 		return boardCopy;
 	}

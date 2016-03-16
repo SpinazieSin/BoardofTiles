@@ -54,24 +54,37 @@ public class Movement {
 			return newPos;
 		// Hit unit if tile not empty
 		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
-			System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
+			// System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
-				System.out.println("Hit!");
+				// System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
 				// if the unit that is hit has more than no hitpoints, do one damage
 				if (hitUnit[1] > 0) hitUnit[1] = hitUnit[1]-1;
 				// if unit has one hitpoint and is hit, it dies
 				else {
 					hitUnit = emptyUnit;
-					System.out.println("it died");
+					// System.out.println("it died");
 				}
 				board.tiles[newPos.xCor][newPos.yCor].unit = hitUnit;
 			} else {
-				System.out.println("Missed..");
+				// System.out.println("Missed..");
 			}
 			return tile;
 		}
 		return tile;
+	}
+
+	public static Tile simulateMove(Board board, Tile tile, Tile newPos) {
+		int[] emptyUnit = {0,0,0};
+		// Do we move to an empty tile?
+		if(board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
+			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
+			board.tiles[tile.xCor][tile.yCor].unit = emptyUnit;
+			return newPos;
+		// Hit unit if tile not empty
+		} else {
+			return newPos;
+		}
 	}
 
 	public static void aiMove(Board board, int race) {
@@ -119,7 +132,7 @@ public class Movement {
 				        f.setVisible(true);
 				    }
                     try {
-	                    Thread.sleep(300);
+	                    if(drawFrames) Thread.sleep(300);
 	                } catch(InterruptedException ex) {
 	                    Thread.currentThread().interrupt();
 	                }
@@ -167,9 +180,10 @@ public class Movement {
 		Tile[] nextState = Learning.Learning(board, unitsToMove, nextStates, race);
 		int xCor = nextState[0].xCor;
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
-			moveAiChar(board, unitsToMove[unitCount], nextState[unitCount]);
+			Tile movetile = new Tile(unitsToMove[unitCount].xCor, unitsToMove[unitCount].yCor, unitsToMove[unitCount].unit, unitsToMove[unitCount].neighbours);
+			moveAiChar(board, movetile, nextState[unitCount]);
 		    try {
-                Thread.sleep(300);
+                if(drawFrames) Thread.sleep(300);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -185,7 +199,8 @@ public class Movement {
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
 		Tile[][] nextStateList = new Tile[100][state.length];
 		for (int strategyCount = 0; strategyCount < 100; strategyCount++) {
-			Board boardCopy = Board.deepCloneBoard(board);
+			Board boardCopy = new Board(8,4,4);
+			boardCopy = Board.deepCloneBoard(board);
 			Tile[] nextState = getNextStates(boardCopy, state, race);
 			for (int tilesInState = 0; tilesInState < nextState.length; tilesInState++) {
 				if(nextState[tilesInState].unit[0] != 0 && 
@@ -222,19 +237,21 @@ public class Movement {
 				}
 			}
 			Tile nextState;
-			if (!nextStateCandidates.isEmpty()) {
+			if (nextStateCandidates.size() == 1) {
+				nextState = nextStateCandidates.get(0);
+			} else if (!nextStateCandidates.isEmpty()) {
 				nextState = nextStateCandidates.get(random.nextInt(nextStateCandidates.size()));
 			} else {
 				nextState = currentState;
 			}
-			nextStates[stateCount] = nextState;
+			Tile movetile = new Tile(currentState.xCor, currentState.yCor, currentState.unit, currentState.neighbours);
+			nextStates[stateCount] = simulateMove(boardCopy, movetile, nextState);
 		}
 		return nextStates;
 	}
 
 	public static void playerMove(Board board){
 		// list of board locations/characters that need to be moved
-
 		ArrayList<Tile> charList = new ArrayList<Tile>();
 		for (int j = 0; j<board.xMax+1; j++) {
      		for (int i = 0; i<board.tiles[j].length; i++) {
