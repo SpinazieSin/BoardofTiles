@@ -10,7 +10,7 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        for (int gameCount = 0; gameCount < 100; gameCount++) {
+        for (int gameCount = 0; gameCount < 25; gameCount++) {
             Board board = buildBoard(8, 4, 4);
             // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
@@ -23,12 +23,13 @@ public class Main {
                 fr.pack();
                 fr.setVisible(true);
             }
+            String victor = "unknown, something went wrong...";
             for (int i = 0; i < 100; i++) {
                 // printBoard(board);
                 // System.out.println("-----------Human Turn-----------");
-                Movement.reinforcedLearningMove(board, 0);
-                Movement.reinforcedLearningMove(board, 0);
-                // Movement.aiMove(board, 0);
+                // Movement.reinforcedLearningMove(board, 0);
+                // Movement.reinforcedLearningMove(board, 0);
+                Movement.aiMove(board, 0);
                 // Movement.playerMove(board);
                 // System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);
@@ -37,53 +38,20 @@ public class Main {
                 breakCount++;
                 if (Board.gameWon(board) == -1) {
                     // Orcs won
+                    victor = "Orcs";
                     balance-=1;
                     break;
                 }
                 if (Board.gameWon(board) == 1) {
                     // Humans won
+                    victor = "Humans";
                     balance+=1;
                     break;
                 }
             }
-            System.out.println("GAME - " + gameCount);
+
+            System.out.println("GAME - " + gameCount + " victor: " + victor);
         }
-        // JFrame f = new JFrame();
-        // f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Board board = buildBoard(8, 4, 4);
-        // Integer[][] data = boardDrawData(board);
-        // drawing.Main frame = new drawing.Main(data);
-        // // Gameloop
-        // while (true) {
-        //     Integer[][] newdata = boardDrawData(board);
-        //     f.setContentPane(new drawing.Main(newdata));
-        //     f.pack();
-        //     f.setLocationRelativeTo(null);
-        //     f.setVisible(true);
-        //     Movement.playerMove(board);
-        //     Scanner scan = new Scanner(System.in);
-        //     try {
-        //         int xCor = scan.nextInt();
-        //         int yCor = scan.nextInt();
-        //         System.out.println(xCor);
-        //         System.out.println(yCor);
-        //     }
-        //     breakCount++;
-        //     if (breakCount % 100 == 0) {
-        //         System.out.println("Calculating.. " +breakCount);
-        //     //break;
-        //     //drawing.Main frame = new drawing.Main();
-        //     //frame.kill()
-        //     printBoard(board);
-        // }
-
-        // Write to file
-        // try{
-        //     writeDoubleArrayToFile("twoPositions.model", Learning.learning);
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
         System.out.println();
         System.out.println(breakCount);
         System.out.println("---------------------------------");
@@ -152,7 +120,7 @@ public class Main {
             board.tiles[7][3].unit = goblin2;
             board.tiles[6][2].unit = goblin3;
             board.tiles[6][5].unit = goblin4;
-            board.tiles[5][5].unit = goblin5;
+            board.tiles[5][6].unit = goblin5;
             board.tiles[5][7].unit = goblin6;
             board.tiles[4][7].unit = goblin7;
             board.tiles[3][7].unit = goblin8;

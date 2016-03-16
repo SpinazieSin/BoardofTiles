@@ -116,7 +116,6 @@ public class Main extends JPanel {
             general = ImageIO.read(new File("General.png"));
             orc = ImageIO.read(new File("Orc.png"));
         } catch (IOException e) {
-            System.out.println(e);
         }
         if(!secondColor){
             hex.draw(g2d, x, y, 0, 0x00CC66, true);
