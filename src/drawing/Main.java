@@ -1,3 +1,6 @@
+/**
+    UTF-8 was used in this file, please beware
+**/
 package drawing;
 
 import java.awt.*;

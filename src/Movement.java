@@ -54,20 +54,20 @@ public class Movement {
 			return newPos;
 		// Hit unit if tile not empty
 		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
-			// System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
+			System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking "+getUnitName(newPos)+ " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
-				// System.out.println("Hit!");
+				System.out.println("Hit!");
 				int[] hitUnit = board.tiles[newPos.xCor][newPos.yCor].unit;
 				// if the unit that is hit has more than no hitpoints, do one damage
 				if (hitUnit[1] > 0) hitUnit[1] = hitUnit[1]-1;
 				// if unit has one hitpoint and is hit, it dies
 				else {
 					hitUnit = emptyUnit;
-					// System.out.println("it died");
+					System.out.println("it died");
 				}
 				board.tiles[newPos.xCor][newPos.yCor].unit = hitUnit;
 			} else {
-				// System.out.println("Missed..");
+				System.out.println("Missed..");
 			}
 			return tile;
 		}
@@ -263,7 +263,7 @@ public class Movement {
 			// Input loop
 			while(true) {
 				try {
-					Main.printBoard(board);
+					// Main.printBoard(board);
 					System.out.println("characters to move: ");
 					Set<Tile> charHash = new HashSet<>();
 					charHash.addAll(charList);
@@ -370,19 +370,19 @@ public class Movement {
                 } else {
                     if (board.tiles[j][i].unit[0] == 1){
                         data[j][i][0] = 1;
-                        data[j][i][1] = 4;
+                        data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 6;
                     }else if(board.tiles[j][i].unit[0] == 2){
                         data[j][i][0] = 2;
-                        data[j][i][1] = 5;
+                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 8;
                     }else if(board.tiles[j][i].unit[0] == 3){
                         data[j][i][0] = 3;
-                        data[j][i][1] = 3;
+                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 4;
                     }else if(board.tiles[j][i].unit[0] == 4){
                         data[j][i][0] = 4;
-                        data[j][i][1] = 10;
+                        data[j][i][1] = data[j][i][1] = board.tiles[j][i].unit[1];
                         data[j][i][2] = 8;
                     } else {
                         data[j][i][0] = 0;

@@ -28,12 +28,12 @@ public class Main {
                 System.out.println("-----------Human Turn-----------");
                 // Movement.reinforcedLearningMove(board, 0);
                 // Movement.reinforcedLearningMove(board, 0);
-                // Movement.aiMove(board, 0);
-                Movement.playerMove(board);
+                Movement.aiMove(board, 0);
+                // Movement.playerMove(board);
                 System.out.println("-----------Greenskin------------");
-                // Movement.aiMove(board, 2);
-                Movement.reinforcedLearningMove(board, 2);
-                Movement.reinforcedLearningMove(board, 2);
+                Movement.aiMove(board, 2);
+                // Movement.reinforcedLearningMove(board, 2);
+                // Movement.reinforcedLearningMove(board, 2);
                 try {
                     Thread.sleep(0);
                 } catch(InterruptedException ex) {
