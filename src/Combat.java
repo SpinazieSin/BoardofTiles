@@ -1,8 +1,15 @@
+/**
+ * Written by Jonathan Gerbscheid and Thomas Groot
+ * Jonathan-gerb@hotmail.com and thomas--g@hotmail.com
+ * for datastructures project, March 2016. 
+ */
 import java.util.Random;
 
 public class Combat {
 
-	// Returns if something hit or not
+	/**
+	 * Calculates if a defending unit is hit. 
+	 */
 	public static Boolean hit(Tile attacker, Tile defender, Tile[][] board) {
 		// new weapons skill is calculated based on adjecent units
 		int attackerSkill = calculateWeaponSkill(attacker, board);
@@ -15,12 +22,16 @@ public class Combat {
 		return false;
 	}
 
-	// Calculates the chance someone will hit
+	/**
+	 * Calculates hit chance.
+	 */
 	private static double calculateHitChange(double attackerSkill, double defenderSkill) {
 		return(1/(1+Math.exp(-0.4*(attackerSkill - defenderSkill))));
 	}
 
-	// Loop over adjecent units to get new weapon skill
+	/**
+	 * Loop over adjecent units to get new weapon skill 
+	 */
 	private static int calculateWeaponSkill(Tile unit, Tile[][] board) {
 		int weaponSkill = unit.unit[2];
 		for (int neighbourCount = 0; neighbourCount < unit.neighbours.size(); neighbourCount++) {
@@ -60,6 +71,10 @@ public class Combat {
 		return weaponSkill;
 	}
 
+	/**
+	 * Calculates the relative total weapon skill of the human side
+	 * used in Learning.
+	 */
 	public static double relativeWeaponSkill(Board board) {
 		double humanCount = 0.0;
 		double orcCount = 0.0;
