@@ -223,6 +223,7 @@ public class Movement {
 		return nextStateList;
 	}
 
+	// For a list of units, generate their next moves
 	public static Tile[] getNextStates(Board boardCopy, Tile[] state, int race) {
 		Random random = new Random();
 		Tile[] nextStates = new Tile[state.length];
