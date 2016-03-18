@@ -20,7 +20,7 @@ public class Learning {
 			double reward = (double)Board.gameWon(boardCopy)*20;
 			reward += ( Combat.relativeWeaponSkill(boardCopy) - currentWeaponSkill );
 			// The multipliers are learning parameters
-			double value = learn + 1.0 * (reward + 0.5 * maxLearn - 0.5 * learn);
+			double value = 0.1 * learn + 1.0 * (reward + 0.5 * maxLearn - 0.4 * learn);
 			if (value > previousValue) {
 				finalState = newStates[strategyCount];
 				previousValue = value;

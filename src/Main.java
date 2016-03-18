@@ -11,10 +11,10 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        // try {
-        // Learning.readDoubleFromFile("learning.model");
-        // } catch (Exception e) {
-        // }
+        try {
+        Learning.readDoubleFromFile("learning.model");
+        } catch (Exception e) {
+        }
         int games = 1000;
         int gameMode= gameMode();
         if(gameMode == 1 || gameMode == 2 || gameMode == 3) {
@@ -23,7 +23,6 @@ public class Main {
         }
         for (int gameCount = 0; gameCount < games; gameCount++) {
             Board board = buildBoard(8, 4, 4);
-            // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
@@ -38,7 +37,6 @@ public class Main {
             }
             String victor = "unknown, something went wrong...";
             for (int i = 0; i < 1000; i++) { // after 1000 moves something is clearly wrong
-                
                 System.out.println("-----------Human Turn-----------");
                 if(gameMode == 1){
                     Movement.playerMove(board, 0);
@@ -57,10 +55,6 @@ public class Main {
                 if(gameMode == 3){
                     Movement.aiMove(board, 2);
                 }
-
-                // Movement.playerMove(board, 2);
-                // Movement.reinforcedLearningMove(board, 2);
-                // Movement.reinforcedLearningMove(board, 2);
                 breakCount++;
                 if (Board.gameWon(board) == -1) {
                     // Orcs won
