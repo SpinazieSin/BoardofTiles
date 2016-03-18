@@ -1,6 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 
@@ -14,10 +15,15 @@ public class Main {
         // Learning.readDoubleFromFile("learning.model");
         // } catch (Exception e) {
         // }
-        for (int gameCount = 0; gameCount < 1000; gameCount++) {
+        int games = 1000;
+        int gameMode= gameMode();
+        if(gameMode == 1 || gameMode == 2 || gameMode == 3) {
+            Movement.drawFrames  = true;
+            games = 1;
+        }
+        for (int gameCount = 0; gameCount < games; gameCount++) {
             Board board = buildBoard(8, 4, 4);
-            // if(gameCount == 990) Movement.drawFrames = true;
-            Movement.drawFrames = true; // comment this to disable drawing windows
+            // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
@@ -32,12 +38,26 @@ public class Main {
             }
             String victor = "unknown, something went wrong...";
             for (int i = 0; i < 1000; i++) { // after 1000 moves something is clearly wrong
-                // System.out.println("-----------Human Turn-----------");
-                Movement.reinforcedLearningMove(board, 0);
-                Movement.reinforcedLearningMove(board, 0);
-                // Movement.playerMove(board, 0);
-                // System.out.println("-----------Greenskin------------");
-                Movement.aiMove(board, 2);
+                
+                System.out.println("-----------Human Turn-----------");
+                if(gameMode == 1){
+                    Movement.playerMove(board, 0);
+                }
+                if(gameMode == 2 ||gameMode == 3 || gameMode == 4){
+                    Movement.reinforcedLearningMove(board, 0);
+                    Movement.reinforcedLearningMove(board, 0);
+                }
+                System.out.println("-----------Greenskin------------");
+                if(gameMode == 1){
+                    Movement.aiMove(board, 2);
+                }
+                if(gameMode == 2){
+                    Movement.playerMove(board, 2);
+                }
+                if(gameMode == 3){
+                    Movement.aiMove(board, 2);
+                }
+
                 // Movement.playerMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
@@ -69,6 +89,26 @@ public class Main {
         System.out.println("BALANCE IS " + balance + " -----------");
         System.out.println("---------------------------------");
     }
+
+    private static int gameMode(){
+        System.out.println("========================================");
+        System.out.println("=====Welcome to Legends of Arborea!=====");
+        System.out.println("========================================");
+        System.out.println("What version would you like to play?");
+        System.out.println("To play against easy (random move) AI, enter: 1");
+        System.out.println("To play against hard, (Reinforced learning) AI, you can only play as Orcs, enter: 2 ");
+        System.out.println("To watch easy AI fight hard AI, enter: 3");
+        System.out.println("To simulate 1000 matches (without visuals) of hard vs hard AI, enter: 4");
+        int version = 1;
+        try{
+            Scanner versionreader = new Scanner(System.in);
+            version = versionreader.nextInt();
+        } catch(Exception e) {
+            System.out.println("bad input, selecting option 1");
+        }
+        return(version);
+    }
+
 
     public static Board buildBoard(int xMax, int yMax, int yMin){
         Board board = new Board(xMax,yMax,yMin);
