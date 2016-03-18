@@ -1,5 +1,5 @@
 import java.util.*;
-
+import java.io.*;
 public class Learning {
 
 
@@ -16,8 +16,8 @@ public class Learning {
 			// Consider next state
 			// double learn = learning(newStates[strategyCount]);
 			// double maxLearn = maxLearning(boardCopy, newStates[strategyCount], race);
-			double learn = learning(states);
-			double maxLearn = maxLearning(newStates[strategyCount]);
+			double learn = learning(newStates[strategyCount]);
+			double maxLearn = maxLearning(newStates[strategyCount], race);
 
 			double reward = (double)Board.gameWon(boardCopy)*100;
 			reward += ( Combat.relativeWeaponSkill(boardCopy) - currentWeaponSkill );
@@ -44,8 +44,9 @@ public class Learning {
 		return boardCopy;
 	}
 
-	private static double maxLearning(Tile[] nextState) {
-		double value = learning(nextState);
+	// How much value can i get from the next move?
+	private static double maxLearning(Tile[] state) {
+		double value = learning(state);
 		return value;
 	}
 	// Max value of next state
@@ -81,4 +82,17 @@ public class Learning {
 		}
 		return index;
 	}
+
+	public static void readDoubleFromFile(String filename) throws IOException {
+        BufferedReader fileReader = null;
+        fileReader = new BufferedReader(new FileReader(filename));
+        int arrayIndex = 0;
+		System.out.println("Reading model from file: " + filename);
+        while(true) {
+        	String newLine = fileReader.readLine();
+        	if (newLine == null) break;
+        	learning[arrayIndex] = Double.parseDouble(newLine);
+        }
+        fileReader.close();  
+    }
 }

@@ -1,7 +1,6 @@
 import java.util.*;
 import java.io.*;
 import drawing.*;
-
 import javax.swing.JFrame;
 
 public class Main {
@@ -10,6 +9,10 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
+        // try {
+        // Learning.readDoubleFromFile("learning.model");
+        // } catch (Exception e) {
+        // }
         for (int gameCount = 0; gameCount < 1000; gameCount++) {
             Board board = buildBoard(8, 4, 4);
             // if(gameCount == 990) Movement.drawFrames = true;
@@ -30,12 +33,11 @@ public class Main {
             }
             String victor = "unknown, something went wrong...";
             for (int i = 0; i < 1000; i++) { // after 1000 moves something is clearly wrong
-                System.out.println("-----------Human Turn-----------");
-                // Movement.reinforcedLearningMove(board, 0);
-                // Movement.reinforcedLearningMove(board, 0);
-                Movement.aiMove(board, 0);
+                // System.out.println("-----------Human Turn-----------");
+                Movement.reinforcedLearningMove(board, 0);
+                Movement.reinforcedLearningMove(board, 0);
                 // Movement.playerMove(board, 0);
-                System.out.println("-----------Greenskin------------");
+                // System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);
                 // Movement.playerMove(board, 2);
                 // Movement.reinforcedLearningMove(board, 2);
@@ -54,8 +56,13 @@ public class Main {
                     break;
                 }
             }
-
-            System.out.println("GAME - " + gameCount + " victor: " + victor);
+            if (gameCount % 50 == 0) {
+                System.out.println("GAME - " + gameCount + " victor: " + victor);
+            }
+        }
+        try {
+            writeDoubleArrayToFile("learning.model", Learning.learning);
+        } catch (Exception e) {
         }
         System.out.println();
         System.out.println(breakCount);
@@ -150,18 +157,13 @@ public class Main {
         return("WHAT?");
     }
 
-    public static void writeDoubleArrayToFile(String filename, double[][] array) throws IOException {
+    public static void writeDoubleArrayToFile(String filename, double[] array) throws IOException {
         BufferedWriter outputWriter = null;
         outputWriter = new BufferedWriter(new FileWriter(filename));
+        System.out.println("Writing model to file: " + filename);
         for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                outputWriter.write(i);
-                outputWriter.write(",");
-                outputWriter.write(j);
-                outputWriter.write(" - ");
-                outputWriter.write(Double.toString(array[i][j]));
-                outputWriter.newLine();
-            }
+            outputWriter.write(String.valueOf(array[i]));
+            outputWriter.newLine();
         }
         outputWriter.flush();  
         outputWriter.close();  
