@@ -66,6 +66,7 @@ public class Combat {
 		int humanSkill = 0;
 		double orcSkill = 0.0;
 		for (Tile[] tileList : board.tiles) {
+			if (tileList == null) System.out.println("WTF");
 			for (Tile tile : tileList) {
 				if (tile == null) continue;
 				if (tile.unit[0] == 1 || tile.unit[0] == 2) {
@@ -77,7 +78,9 @@ public class Combat {
 				}
 			}
 		}
-
+		if (orcCount == 0 || humanCount == 0) {
+			return 0;
+		}
 		return ( (double)orcSkill / orcCount ) - ( (double)humanSkill / humanCount);
 	}
 }

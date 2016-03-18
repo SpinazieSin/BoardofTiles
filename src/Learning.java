@@ -4,7 +4,7 @@ public class Learning {
 
 
 	// Board data
-	public static double[] learning = new double[99999999];
+	public static double[] learning = new double[999999];
 
 	public static Tile[] Learning(Board board, Tile[] states, Tile[][] newStates, int race) {
 		Double previousValue = 0.0;
@@ -14,15 +14,13 @@ public class Learning {
 			Board boardCopy = Board.deepCloneBoard(board);
 			boardCopy = getNewBoard(boardCopy, states, newStates[strategyCount], race);
 			// Consider next state
-			// double learn = learning(newStates[strategyCount]);
-			// double maxLearn = maxLearning(boardCopy, newStates[strategyCount], race);
 			double learn = learning(newStates[strategyCount]);
-			double maxLearn = maxLearning(newStates[strategyCount], race);
+			double maxLearn = maxLearning(boardCopy, newStates[strategyCount], race);
 
-			double reward = (double)Board.gameWon(boardCopy)*100;
+			double reward = (double)Board.gameWon(boardCopy)*20;
 			reward += ( Combat.relativeWeaponSkill(boardCopy) - currentWeaponSkill );
-			// 0.1 and 0.9 are learning parameters
-			double value = learn + 0.1 * (reward + 0.9 * maxLearn - learn);
+			// The multipliers are learning parameters
+			double value = learn + 1.0 * (reward + 0.5 * maxLearn - 0.5 * learn);
 			if (value > previousValue) {
 				finalState = newStates[strategyCount];
 				previousValue = value;
@@ -45,23 +43,17 @@ public class Learning {
 	}
 
 	// How much value can i get from the next move?
-	private static double maxLearning(Tile[] state) {
-		double value = learning(state);
+	private static double maxLearning(Board boardCopy, Tile[] state, int race) {
+		Tile[][] nextStateList = Movement.getPossibleStates(boardCopy, state, race);
+		double value = 0.0;
+		for (int strategyCount = 0; strategyCount < nextStateList.length; strategyCount++) {
+			double newValue = learning(nextStateList[strategyCount]);
+			if (newValue > value) {
+				value = newValue;
+			}
+		}
 		return value;
 	}
-	// Max value of next state
-	// private static double maxLearning(Board boardCopy, Tile[] state, int race) {
-	// 	double value = Double.MIN_VALUE;
-	// 	Tile[][] nextStates = Movement.getPossibleStates(boardCopy, state, race);
-	// 	for (int i = 0; i < nextStates.length; i++) {
-	// 		Tile[] nextState = nextStates[i];
-	// 		double newValue = learning(nextStates[i]);
-	// 		if (newValue > value) {
-	// 			value = newValue;				
-	// 		}
-	// 	}
-	// 	return value;
-	// }
 
 	private static double learning(Tile[] state) {
 		int stateValue = getPositionValue(state);

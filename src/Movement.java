@@ -49,7 +49,7 @@ public class Movement {
 		if(board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
 			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
 			board.tiles[tile.xCor][tile.yCor].unit = emptyUnit;
-			if(drawFrames) System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
+			// if(drawFrames) System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 			return newPos;
 		// Hit unit if tile not empty
 		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
@@ -157,8 +157,8 @@ public class Movement {
      	Tile[] unitsToMove;
      	while (!charList.isEmpty()) {
      		int characterAmount = charList.size();
-     		if (characterAmount > 4) {
-     			unitsToMove = new Tile[4];
+     		if (characterAmount > 3) {
+     			unitsToMove = new Tile[3];
      		}
      		else {
      			unitsToMove = new Tile[characterAmount];
@@ -167,6 +167,9 @@ public class Movement {
 				characterAmount-=1;
      			unitsToMove[unitCount] = charList.get(characterAmount);
      			charList.remove(characterAmount);
+			}
+			if (Board.gameWon(board) != 0) {
+				return;
 			}
 			createNewMove(board, unitsToMove, race);
 		}
@@ -179,6 +182,9 @@ public class Movement {
 		int xCor = nextState[0].xCor;
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
 			Tile movetile = new Tile(unitsToMove[unitCount].xCor, unitsToMove[unitCount].yCor, unitsToMove[unitCount].unit, unitsToMove[unitCount].neighbours);
+			if (Board.gameWon(board) != 0) {
+				return;
+			}
 			moveAiChar(board, movetile, nextState[unitCount]);
 		    try {
                 if(drawFrames) Thread.sleep(300);
@@ -195,8 +201,8 @@ public class Movement {
 	}
 
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
-		Tile[][] nextStateList = new Tile[400][state.length];
-		for (int strategyCount = 0; strategyCount < 400; strategyCount++) {
+		Tile[][] nextStateList = new Tile[60][state.length];
+		for (int strategyCount = 0; strategyCount < 60; strategyCount++) {
 			Board boardCopy = new Board(8,4,4);
 			boardCopy = Board.deepCloneBoard(board);
 			Tile[] nextState = getNextStates(boardCopy, state, race);
