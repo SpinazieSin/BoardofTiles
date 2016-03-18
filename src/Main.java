@@ -10,14 +10,14 @@ public class Main {
         int balance = 0;
         // Gameloop
         int breakCount = 0;
-        // try {
-        // Learning.readDoubleFromFile("learning.model");
-        // } catch (Exception e) {
-        // }
-        for (int gameCount = 0; gameCount < 1000; gameCount++) {
+        try {
+        Learning.readDoubleFromFile("learning.model");
+        } catch (Exception e) {
+        }
+        for (int gameCount = 0; gameCount < 10; gameCount++) {
             Board board = buildBoard(8, 4, 4);
             // if(gameCount == 990) Movement.drawFrames = true;
-            Movement.drawFrames = true; // comment this to disable drawing windows
+            // Movement.drawFrames = true; // comment this to disable drawing windows
             if(Movement.drawFrames){
                 System.out.println("drawing frames enabled.");
                 JFrame fr = new JFrame();
@@ -34,7 +34,8 @@ public class Main {
             for (int i = 0; i < 1000; i++) { // after 1000 moves something is clearly wrong
                 // System.out.println("-----------Human Turn-----------");
                 Movement.reinforcedLearningMove(board, 0);
-                Movement.reinforcedLearningMove(board, 0);
+                System.out.println(Combat.relativeWeaponSkill(board) + "-----");
+                // Movement.reinforcedLearningMove(board, 0);
                 // Movement.playerMove(board, 0);
                 // System.out.println("-----------Greenskin------------");
                 Movement.aiMove(board, 2);

@@ -61,12 +61,11 @@ public class Combat {
 	}
 
 	public static double relativeWeaponSkill(Board board) {
-		int humanCount = 0;
+		double humanCount = 0.0;
 		double orcCount = 0.0;
 		int humanSkill = 0;
-		double orcSkill = 0.0;
+		int orcSkill = 0;
 		for (Tile[] tileList : board.tiles) {
-			if (tileList == null) System.out.println("WTF");
 			for (Tile tile : tileList) {
 				if (tile == null) continue;
 				if (tile.unit[0] == 1 || tile.unit[0] == 2) {
@@ -81,6 +80,6 @@ public class Combat {
 		if (orcCount == 0 || humanCount == 0) {
 			return 0;
 		}
-		return ( (double)orcSkill / orcCount ) - ( (double)humanSkill / humanCount);
+		return ( (double)humanSkill / humanCount ) - ( (double)orcSkill / orcCount );
 	}
 }

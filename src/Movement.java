@@ -229,6 +229,7 @@ public class Movement {
 		for (int stateCount = 0; stateCount < state.length; stateCount++) {
 			Tile currentState = state[stateCount];
 			ArrayList<Tile> nextStateCandidates = new ArrayList<Tile>();
+			nextStateCandidates.add(currentState);
 			for (Integer[] neighbour : currentState.neighbours) {
 				Tile neighbourTile = boardCopy.tiles[neighbour[0]][neighbour[1]];
 				if(neighbourTile.unit[0] != 0 && 
