@@ -1,6 +1,11 @@
 /**
-    UTF-8 was used in this file, please beware
-**/
+ * Written by Jonathan Gerbscheid and Thomas Groot
+ * Jonathan-gerb@hotmail.com and thomas--g@hotmail.com
+ * for datastructures project, March 2016. 
+ * WARNING UTF-8 CHARACTER USED IN THIS FILE
+ * Uses some code from: 
+ * http://stackoverflow.com/questions/20734438/algorithm-to-generate-a-hexagonal-grid-with-coordinate-system
+ */
 package drawing;
 
 import java.awt.BasicStroke;
@@ -23,7 +28,6 @@ public class Main extends JPanel {
     private static final long serialVersionUID = 1L;
     private final int WIDTH = 900;
     private final int HEIGHT = 900;
-    private boolean secondColor = true;
     private int xCor = 4;
     private int yCor = 8;
     private Integer[][][] data;
@@ -31,6 +35,12 @@ public class Main extends JPanel {
     private Font font = new Font("Arial", Font.BOLD, 18);
     FontMetrics metrics;
 
+
+    /**
+     * The main for the drawing package takes a 3-dimensional array 
+     * that contains all units and their positions and health. It draws
+     * the current board state.
+     */
     public Main(Integer[][][] dataIn) {
         data = dataIn;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -53,12 +63,13 @@ public class Main extends JPanel {
         g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
         g2d.setFont(font);
         metrics = g.getFontMetrics();
-
-        // drawHexGridLoop(g2d, origin, 9, 50, 4);
-        secondColor = false;
         drawHexGridLoop(g2d, newOrigin, 9, 50, 3);
     }
-
+    /**
+     * loops overDrawHex and updates the global x and y coordinates used to determine 
+     * where units are to be printed on the board/ links our coordinate system with 
+     * the top left to bottom right drawing. 
+     */
     private void drawHexGridLoop(Graphics g, Point origin, int size, int radius, int padding) {
         double ang30 = Math.toRadians(30);
         double xOff = Math.cos(ang30) * (radius + padding);
@@ -92,6 +103,10 @@ public class Main extends JPanel {
         }
     }
 
+    /**
+     * Draws a single hex and if a unit is present draws the correct unit
+     * and it's health points.
+     */
     private void drawHex(Graphics g, int x, int y, int r) {
         Graphics2D g2d = (Graphics2D) g;
 
@@ -111,13 +126,9 @@ public class Main extends JPanel {
             orc = ImageIO.read(new File("Orc.png"));
         } catch (IOException e) {
         }
-        if(!secondColor){
-            hex.draw(g2d, x, y, 0, 0x00CC66, true);
-            hex.draw(g2d, x, y, 4, 0x00994C, false);
-        } else {
-            hex.draw(g2d, x, y, 0, 0x808080, true);
-            hex.draw(g2d, x, y, 4, 0x808080, false);
-        }
+ 
+        hex.draw(g2d, x, y, 0, 0x00CC66, true);
+        hex.draw(g2d, x, y, 4, 0x00994C, false);
 
         g.setColor(new Color(0x888888));
         g.drawString(text, x - w/2, y + h/2);

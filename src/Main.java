@@ -1,3 +1,8 @@
+/**
+ * Written by Jonathan Gerbscheid and Thomas Groot
+ * Jonathan-gerb@hotmail.com and thomas--g@hotmail.com
+ * for datastructures project, March 2016. 
+ */
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,10 +14,9 @@ public class Main {
 
     public static void main (String[] args) {
         int balance = 0;
-        // Gameloop
         int breakCount = 0;
         try {
-        Learning.readDoubleFromFile("learning.model");
+            Learning.readDoubleFromFile("learning.model");
         } catch (Exception e) {
         }
         int games = 1000;
@@ -45,7 +49,7 @@ public class Main {
                     Movement.reinforcedLearningMove(board, 0);
                     Movement.reinforcedLearningMove(board, 0);
                 }
-                System.out.println("-----------Greenskin------------");
+                System.out.println("-----------Greenskin Turn------------");
                 if(gameMode == 1){
                     Movement.aiMove(board, 2);
                 }
@@ -53,6 +57,9 @@ public class Main {
                     Movement.playerMove(board, 2);
                 }
                 if(gameMode == 3){
+                    Movement.aiMove(board, 2);
+                }
+                if(gameMode == 4){
                     Movement.aiMove(board, 2);
                 }
                 breakCount++;
@@ -69,12 +76,10 @@ public class Main {
                     break;
                 }
             }
-            if (gameCount % 50 == 0) {
-                System.out.println("GAME - " + gameCount + " victor: " + victor);
-            }
+            System.out.println("GAME - " + gameCount + " victor: " + victor);
         }
         try {
-            writeDoubleArrayToFile("learning.model", Learning.learning);
+            Learning.writeDoubleArrayToFile("learning.model", Learning.learning);
         } catch (Exception e) {
         }
         System.out.println();
@@ -84,6 +89,10 @@ public class Main {
         System.out.println("---------------------------------");
     }
 
+    /**
+     * Prints introductory text and reads an integer to determine 
+     * the desired game mode.  
+     */
     private static int gameMode(){
         System.out.println("========================================");
         System.out.println("=====Welcome to Legends of Arborea!=====");
@@ -92,7 +101,7 @@ public class Main {
         System.out.println("To play against easy (random move) AI, enter: 1");
         System.out.println("To play against hard, (Reinforced learning) AI, you can only play as Orcs, enter: 2 ");
         System.out.println("To watch easy AI fight hard AI, enter: 3");
-        System.out.println("To simulate 1000 matches (without visuals) of hard vs hard AI, enter: 4");
+        System.out.println("To simulate 1000 matches (without visuals) of hard vs easy AI, enter: 4");
         int version = 1;
         try{
             Scanner versionreader = new Scanner(System.in);
@@ -103,40 +112,14 @@ public class Main {
         return(version);
     }
 
-
+    /** initializes the board and adds the units.*/
     public static Board buildBoard(int xMax, int yMax, int yMin){
         Board board = new Board(xMax,yMax,yMin);
         initUnits(board);
         return(board);
     }
 
-
-    public static void printBoard(Board board){
-        System.out.print("+-");
-        for (int yAxis = 0; yAxis < board.yMax+board.yMin+1; yAxis++) {
-            System.out.print("-"+yAxis+"-");
-        }
-        System.out.println("-+");
-        for (int xOffset = 0; xOffset < board.xMax+1; xOffset++) {
-            System.out.print(xOffset+"-");
-            for (int yOffset = 0; yOffset < board.yMax+board.yMin+1; yOffset++) {
-                if (board.tiles[xOffset][yOffset] == null) {
-                    System.out.print("---");
-                   continue;
-                } else {
-                    String unit = getUnitName(board.tiles[xOffset][yOffset].unit[0]);
-                    System.out.print("["+unit+"]");
-                }
-            }
-            System.out.println("-"+xOffset);
-        }
-        System.out.print("+-");
-        for (int yAxis = 0; yAxis < board.yMax+board.yMin+1; yAxis++) {
-            System.out.print("-"+yAxis+"-");
-        }
-        System.out.println("-+");
-    }
-
+    /** Takes the board as input and adds units at the appropriate positions. */
     public static void initUnits(Board board) {
             int[] orc1 = {4, 10, 8};
             int[] orc2 = {4, 10, 8};
@@ -181,24 +164,4 @@ public class Main {
             board.tiles[1][1].unit = swordsman6;
     }
 
-    private static String getUnitName(int index){
-        if(index == 0) return(" ");
-        if(index == 1) return("S");
-        if(index == 2) return("E");
-        if(index == 3) return("G");
-        if(index == 4) return("O");
-        return("WHAT?");
-    }
-
-    public static void writeDoubleArrayToFile(String filename, double[] array) throws IOException {
-        BufferedWriter outputWriter = null;
-        outputWriter = new BufferedWriter(new FileWriter(filename));
-        System.out.println("Writing model to file: " + filename);
-        for (int i = 0; i < array.length; i++) {
-            outputWriter.write(String.valueOf(array[i]));
-            outputWriter.newLine();
-        }
-        outputWriter.flush();  
-        outputWriter.close();  
-    }
 }

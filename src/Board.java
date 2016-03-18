@@ -1,3 +1,8 @@
+/**
+ * Written by Jonathan Gerbscheid and Thomas Groot
+ * Jonathan-gerb@hotmail.com and thomas--g@hotmail.com
+ * for datastructures project, March 2016. 
+ */
 import java.util.ArrayList;
 
 public class Board {
@@ -7,9 +12,10 @@ public class Board {
     public int yMax;
     public int yMin;
     
-    // the Tile class
-    // one constructor
-    public Board(int xMaxInt, int yMaxInt, int yMinInt) {
+    /**
+     * Initializes all Tiles and adds them to the tiles array.
+     */
+    private ArrayList<Tile> initializeTiles(int xMaxInt, int yMaxInt, int yMinInt){
         ArrayList<Tile> tileList = new ArrayList<Tile>();
         xMax = xMaxInt;
         yMax = yMaxInt;
@@ -51,8 +57,13 @@ public class Board {
                 }
             }
         }
+        return(tileList);
+    }
 
-        // Loop over previous array to create a final list of all the tiles
+    /**
+     * Adds neighbours to all Tiles.
+     */
+    private void addNeighbours(ArrayList<Tile> tileList){
         int tileListSize = tileList.size();
         tiles = new Tile[tileListSize][yMax+yMin+1];
         for (int tileCount = 0; tileCount < tileListSize; tileCount++) {
@@ -62,6 +73,7 @@ public class Board {
             for (int neighbourCount = 0; neighbourCount < tileListSize; neighbourCount++) {
                 int neighbourXCor = tileList.get(neighbourCount).xCor;
                 int neighbourYCor = tileList.get(neighbourCount).yCor;
+                // Rules for finding the neighbours for the bottom half of the board.
                 if (tile.yCor < yMin) {
                     if (
                         tile.xCor + 1 == neighbourXCor && tile.yCor + 1 == neighbourYCor ||
@@ -74,6 +86,7 @@ public class Board {
                         neighbourList.add(neighbourPosition);
                     }
                 }
+                // Rules for finding the neighbours for the top half of the board.
                 if (tile.yCor > yMin) {
                     if (
                         tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
@@ -86,6 +99,7 @@ public class Board {
                         neighbourList.add(neighbourPosition);
                     }
                 }
+                // Rules for finding the neighbours for the bmiddle row of Tiles.
                 if (tile.yCor == yMin) {
                     if (
                         tile.xCor + 1 == neighbourXCor && tile.yCor + 0 == neighbourYCor ||
@@ -104,7 +118,12 @@ public class Board {
         }
     }
 
-    // Prints the coordinates of the neighbours of a tile
+    public Board(int xMaxInt, int yMaxInt, int yMinInt) {
+        ArrayList<Tile> tileList = initializeTiles(xMaxInt, yMaxInt, yMinInt);
+        addNeighbours(tileList);
+    }
+
+    /** Prints the coordinates of the neighbours of a tile. */
     public static void printNeighbours(Tile tile, Board board) {
         System.out.println("Neighbours of tile: " + tile.xCor + "," + tile.yCor);
         for (Integer[] neighbour : tile.neighbours) {
@@ -116,7 +135,11 @@ public class Board {
         }
     }
 
-    // returns 0 if no player has won, 1 if humans win and 2 if orcs win.
+    /** 
+     * Counts all units on the board and uses those numbers to determine if
+     * one of the two sides has won. Returns 0 if no player has won,
+     * 1 if humans win and 2 if orcs win. 
+     */
     public static int gameWon(Board board) {
         int swordsmancounter = 0;
         int goblincounter = 0;
@@ -133,11 +156,6 @@ public class Board {
                 if(board.tiles[j][i].unit[0] == 4) orccounter++;
             }
         }
-        // System.out.println("swordsman " + swordsmancounter);
-        // System.out.println("general " + generalcounter);
-        // System.out.println("goblin " + goblincounter);
-        // System.out.println("orc " + orccounter);
-
         if(swordsmancounter == 0 && generalcounter == 0){
             return(-1);
         }
@@ -148,6 +166,10 @@ public class Board {
         
     }
 
+    /**
+     * Cloning function that copies the content of a board to a 
+     * new board, used for Learning.
+     */
     public static Board deepCloneBoard(Board board) {
         Board boardClone = new Board(8,4,4);
         for (int i = 0; i < board.tiles.length; i++) {

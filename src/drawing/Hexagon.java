@@ -1,3 +1,7 @@
+/**
+ * Defines a hexagon. 
+ * Source: http://stackoverflow.com/questions/20734438/algorithm-to-generate-a-hexagonal-grid-with-coordinate-system
+ */
 package drawing;
 
 import java.awt.BasicStroke;
