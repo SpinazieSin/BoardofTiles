@@ -87,4 +87,16 @@ public class Learning {
         }
         fileReader.close();  
     }
+
+    public static void writeDoubleArrayToFile(String filename, double[] array) throws IOException {
+        BufferedWriter outputWriter = null;
+        outputWriter = new BufferedWriter(new FileWriter(filename));
+        System.out.println("Writing model to file: " + filename);
+        for (int i = 0; i < array.length; i++) {
+            outputWriter.write(String.valueOf(array[i]));
+            outputWriter.newLine();
+        }
+        outputWriter.flush();  
+        outputWriter.close();  
+    }
 }
