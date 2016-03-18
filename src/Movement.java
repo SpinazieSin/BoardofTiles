@@ -1,14 +1,18 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Set;
 
-import java.io.*;
-import drawing.*;
-
+import drawing.Hexagon;
+import drawing.Main;
 import javax.swing.JFrame;
 
 public class Movement {
 
 	public static JFrame f;
 	public static boolean drawFrames = false;
+	private static Scanner scan;
 
 	public static int randInt(int min, int max) {
 	    Random rand = new Random();
@@ -176,7 +180,6 @@ public class Movement {
 		Tile[][] nextStates = getPossibleStates(board, unitsToMove, race);
 		// Board boardCopy = Board.deepCloneBoard(board);
 		Tile[] nextState = Learning.Learning(board, unitsToMove, nextStates, race);
-		int xCor = nextState[0].xCor;
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
 			Tile movetile = new Tile(unitsToMove[unitCount].xCor, unitsToMove[unitCount].yCor, unitsToMove[unitCount].unit, unitsToMove[unitCount].neighbours);
 			moveAiChar(board, movetile, nextState[unitCount]);
@@ -270,7 +273,7 @@ public class Movement {
 			f.setContentPane(new drawing.Main(newdata));
 	        f.pack();
 	        f.setVisible(true);
-	     	Scanner scan = new Scanner(System.in);
+	     	scan = new Scanner(System.in);
 			int oldXCor = 0;
 			int oldYCor = 0;
 			int newXCor = 0;
