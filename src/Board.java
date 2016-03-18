@@ -1,16 +1,11 @@
-import java.util.*;
+import java.util.ArrayList;
 
-public class Board implements Cloneable{
+public class Board {
     
     public Tile[][] tiles;
     public int xMax;
     public int yMax;
     public int yMin;
-    
-    @Override
-    public Board clone() throws CloneNotSupportedException{
-        return new Board ( 8, 4, 4 );
-    }
     
     // the Tile class
     // one constructor
@@ -19,14 +14,12 @@ public class Board implements Cloneable{
         xMax = xMaxInt;
         yMax = yMaxInt;
         yMin = yMinInt;
-        int id = 0;
         int[] placeholderUnit = {0,0,0};
         // Create middle line
         for (int x = 0; x <= xMax; x++) {
             ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
             Tile t= new Tile(x, yMin, placeholderUnit, neighbourPlaceholder);
             tileList.add(t);
-            id++;
         }
         for (int xOffset = 0; xOffset < xMax; xOffset++) {
             // Create top of the board
@@ -35,14 +28,12 @@ public class Board implements Cloneable{
                     ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
                     Tile t= new Tile(xOffset, yOffset+yMin, placeholderUnit, neighbourPlaceholder);
                     tileList.add(t);
-                    id++;
                 }
             } else {
                 for (int yOffset = 1; yOffset <= xMax-xOffset; yOffset++) {
                     ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
                     Tile t= new Tile(xOffset, yOffset+yMin, placeholderUnit, neighbourPlaceholder);
                     tileList.add(t);
-                    id++;
                 }
             }
             // Create bottom of the board
@@ -51,14 +42,12 @@ public class Board implements Cloneable{
                     ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
                     Tile t= new Tile(xOffset, -yOffset+yMin, placeholderUnit, neighbourPlaceholder);
                     tileList.add(t);
-                    id++;
                 }
             } else {
                 for (int yOffset = 1; yOffset <= xMax-xOffset; yOffset++) {
                     ArrayList<Integer[]> neighbourPlaceholder=  new ArrayList<Integer[]>();
                     Tile t= new Tile(xOffset, -yOffset+yMin, placeholderUnit, neighbourPlaceholder);
                     tileList.add(t);
-                    id++;
                 }
             }
         }

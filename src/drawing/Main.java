@@ -3,20 +3,27 @@
 **/
 package drawing;
 
-import java.awt.*;
-import javax.swing.*;
-import java.io.*;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Main extends JPanel {
     private static final long serialVersionUID = 1L;
     private final int WIDTH = 900;
     private final int HEIGHT = 900;
     private boolean secondColor = true;
-    private int id = 0;
     private int xCor = 4;
     private int yCor = 8;
     private Integer[][][] data;
@@ -31,11 +38,8 @@ public class Main extends JPanel {
 
     public Main(JFrame f) {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        //JFrame f = new JFrame();
-        //Main p = new Main();
-
         f.setContentPane(this);
-        //f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
@@ -44,17 +48,13 @@ public class Main extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        Point origin = new Point(WIDTH / 2, HEIGHT / 2);
         Point newOrigin = new Point((WIDTH / 2) + 5, (HEIGHT / 2) - 5);
 
         g2d.setStroke(new BasicStroke(4.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER));
         g2d.setFont(font);
         metrics = g.getFontMetrics();
 
-        // drawCircle(g2d, origin, 800, true, true, 0x000000, 0);
         // drawHexGridLoop(g2d, origin, 9, 50, 4);
-        // drawHex(g2d, 200, 200, 10);
-        // drawHex(g2d, 220, 200, 10);
         secondColor = false;
         drawHexGridLoop(g2d, newOrigin, 9, 50, 3);
     }
@@ -70,14 +70,10 @@ public class Main extends JPanel {
             int prevline = xCor;
 
             for (int col = 0; col < cols; col++) {
-                int xLbl = row < half ? col - row : col - half;
-                int yLbl = row - half;
+
                 int x = (int) (origin.x + xOff * (col * 2 + 1 - cols));
                 int y = (int) (origin.y + yOff * (row - half) * 3);
-
                 drawHex(g, x, y, radius);
-
-                id++;
                 if(xCor == 8) {
                     makeswitch = true;
                 }
@@ -104,8 +100,6 @@ public class Main extends JPanel {
         String character = "";
         int w = metrics.stringWidth(text);
         int h = metrics.getHeight();
-        int xStuff = x - w/2;
-        int yStuff = y + h/2;
         BufferedImage goblin = null;
         BufferedImage swordsman = null;
         BufferedImage general = null;
@@ -155,34 +149,6 @@ public class Main extends JPanel {
                 g.drawString("❤: " + health, x - 25, y + 30);
             }
         }
-    }
-
-    private String coord(int value) {
-        return (value > 0 ? "+" : "") + Integer.toString(value);
-    }
-
-    public void drawCircle(Graphics2D g, Point origin, int radius,
-            boolean centered, boolean filled, int colorValue, int lineThickness) {
-        // Store before changing.
-        Stroke tmpS = g.getStroke();
-        Color tmpC = g.getColor();
-
-        g.setColor(new Color(colorValue));
-        g.setStroke(new BasicStroke(lineThickness, BasicStroke.CAP_ROUND,
-                BasicStroke.JOIN_ROUND));
-
-        int diameter = radius * 2;
-        int x2 = centered ? origin.x - radius : origin.x;
-        int y2 = centered ? origin.y - radius : origin.y;
-
-        if (filled)
-            g.fillOval(x2, y2, diameter, diameter);
-        else
-            g.drawOval(x2, y2, diameter, diameter);
-
-        // Set values to previous when done.
-        g.setColor(tmpC);
-        g.setStroke(tmpS);
     }
 
     public static void main(String[] args) {

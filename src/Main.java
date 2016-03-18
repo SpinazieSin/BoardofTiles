@@ -1,6 +1,7 @@
-import java.util.*;
-import java.io.*;
-import drawing.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 public class Main {
@@ -25,8 +26,6 @@ public class Main {
                 }catch(ArrayIndexOutOfBoundsException e) {
                 }
                 fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
-                Integer[][][] data = Movement.boardDrawData(board);
-                drawing.Main frame = new drawing.Main(data);
                 fr.pack();
                 fr.setVisible(true);
                 Movement.f = fr;
