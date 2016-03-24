@@ -22,9 +22,6 @@ public class Combat {
 		return false;
 	}
 
-	/**
-	 * Calculates hit chance.
-	 */
 	private static double calculateHitChange(double attackerSkill, double defenderSkill) {
 		return(1/(1+Math.exp(-0.4*(attackerSkill - defenderSkill))));
 	}
@@ -72,7 +69,9 @@ public class Combat {
 	}
 
 	/**
-	 * Calculates the relative total weapon skill of the human side
+	 * Calculates the relative total weapon of all units on the board.
+	 * A positive value means the humans are in a favored position and
+	 * a negative value is a favored position for the orcs
 	 * used in Learning.
 	 */
 	public static double relativeWeaponSkill(Board board) {

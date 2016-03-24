@@ -12,14 +12,18 @@ import javax.swing.JFrame;
 
 public class Main {
 
+    /**
+    * Calls the gameloop with any given setting a user provides
+    */
     public static void main (String[] args) {
         int balance = 0;
         int breakCount = 0;
+        // Load the previously learned model
         try {
             Learning.readDoubleFromFile("learning.model");
         } catch (Exception e) {
         }
-        int games = 1000;
+        int games = 25;
         int gameMode= gameMode();
         if(gameMode == 1 || gameMode == 2 || gameMode == 3) {
             Movement.drawFrames  = true;
@@ -78,14 +82,15 @@ public class Main {
             }
             System.out.println("GAME - " + gameCount + " victor: " + victor);
         }
+        // Store the newly learned model
         try {
-            Learning.writeDoubleArrayToFile("learning.model", Learning.learning);
+            // Uncommenting might result in the previous model being overwritten
+            // Learning.writeDoubleArrayToFile("learning.model", Learning.learning);
         } catch (Exception e) {
         }
-        System.out.println();
-        System.out.println(breakCount);
+        System.out.println("Positive balance means the humans won, negative means orc won");
         System.out.println("---------------------------------");
-        System.out.println("BALANCE IS " + balance + " -----------");
+        System.out.println("BALANCE IS " + balance + " ----------------");
         System.out.println("---------------------------------");
     }
 
@@ -101,7 +106,7 @@ public class Main {
         System.out.println("To play against easy (random move) AI, enter: 1");
         System.out.println("To play against hard, (Reinforced learning) AI, you can only play as Orcs, enter: 2 ");
         System.out.println("To watch easy AI fight hard AI, enter: 3");
-        System.out.println("To simulate 1000 matches (without visuals) of hard vs easy AI, enter: 4");
+        System.out.println("To simulate 25 matches (without visuals) of hard vs easy AI, enter: 4 (might take a while)");
         int version = 1;
         try{
             Scanner versionreader = new Scanner(System.in);
@@ -163,5 +168,4 @@ public class Main {
             board.tiles[1][2].unit = swordsman5;
             board.tiles[1][1].unit = swordsman6;
     }
-
 }

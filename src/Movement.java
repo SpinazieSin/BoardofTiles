@@ -14,49 +14,28 @@ public class Movement {
 	public static boolean drawFrames = false;
 	private static Scanner scan;
 
+	/**
+	* Generates a random int that can start from index 0
+	*/
 	public static int randInt(int min, int max) {
 	    Random rand = new Random();
 	    int random = rand.nextInt((max - min) + 1) + min;
 	    return random;
 	}
 
-	public static void moveChar(Board board, Tile tile, Tile newPos) {
+	/**
+	* Moves a character from a tile to a New Position
+	*/
+	public static Tile moveCharacter(Board board, Tile tile, Tile newPos) {
 		int[] emptyUnit = {0,0,0};
 		// Do we move to an empty tile?
 		if (board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
-			newPos.unit = emptyUnit;
-			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
-			board.tiles[tile.xCor][tile.yCor].unit = newPos.unit;
-			if(drawFrames) System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
-		// Hit unit if tile not empty
-		} else { 
-			if(drawFrames) System.out.println(getUnitName(tile) + " is attacking "+getUnitName(newPos));
-			if (Combat.hit(tile, newPos, board.tiles)) {
-				if(drawFrames) System.out.println("Hit!");
-				// if the unit that is hit has more than no hitpoints, do one damage
-				if (board.tiles[newPos.xCor][newPos.yCor].unit[1] > 1) {
-					board.tiles[newPos.xCor][newPos.yCor].unit[1]--;
-				} else {
-				// if unit has one hitpoint and is hit, it dies
-					board.tiles[newPos.xCor][newPos.yCor].unit = emptyUnit;
-					if(drawFrames) System.out.println("it died");
-				}
-			} else {
-				if(drawFrames) System.out.println("Missed..");
-			}
-		}
-	}
-
-	public static Tile moveAiChar(Board board, Tile tile, Tile newPos) {
-		int[] emptyUnit = {0,0,0};
-		// Do we move to an empty tile?
-		if(board.tiles[newPos.xCor][newPos.yCor].unit[0] == 0){
 			board.tiles[newPos.xCor][newPos.yCor].unit = tile.unit;
 			board.tiles[tile.xCor][tile.yCor].unit = emptyUnit;
-			// if(drawFrames) System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
+			if(drawFrames) System.out.println("Moved to: "+ newPos.xCor+", "+newPos.yCor);
 			return newPos;
 		// Hit unit if tile not empty
-		} else if (newPos.xCor != tile.xCor && newPos.yCor != tile.yCor) {
+		} else if (newPos.xCor != tile.xCor || newPos.yCor != tile.yCor) {
 			if(drawFrames) System.out.println(getUnitName(tile) + " " + tile.xCor + "," + tile.yCor + " is attacking " + getUnitName(newPos) + " " + newPos.xCor + "," + newPos.yCor);
 			if (Combat.hit(tile, newPos, board.tiles)) {
 				if(drawFrames) System.out.println("Hit!");
@@ -76,6 +55,12 @@ public class Movement {
 		return tile;
 	}
 
+	
+
+	/**
+	* Moves a character without actually attacking, used by learning for trying
+	* out different moves
+	*/
 	public static Tile simulateMove(Board board, Tile tile, Tile newPos) {
 		int[] emptyUnit = {0,0,0};
 		// Do we move to an empty tile?
@@ -89,6 +74,7 @@ public class Movement {
 		}
 	}
 
+	// takes a turn for the semi random ai
 	public static void aiMove(Board board, int race) {
 		// race = 0 means humans, race = 2 means greenskins
 		// list of board locations/characters that need to be moved
@@ -126,7 +112,7 @@ public class Movement {
 	     			}
 	     		}
 	     		if (newPos != randomUnit) {
-	     			randomUnit = moveAiChar(board, randomUnit, newPos);
+	     			randomUnit = moveCharacter(board, randomUnit, newPos);
 	     			if(drawFrames){
 						Integer[][][] newdata = boardDrawData(board);
 						f.setContentPane(new drawing.Main(newdata));
@@ -143,6 +129,11 @@ public class Movement {
 	    }
 	}
 
+	/**
+	* Moves the characters of a race once and implements reinforcement
+	* learning to maximize the best outcome for humans.
+	* This method is called twice to complete one turn.
+	**/
 	public static void reinforcedLearningMove(Board board, int race) {
 		ArrayList<Tile> charList = new ArrayList<Tile>();
 		for (int j = 0; j<board.xMax+1; j++) {
@@ -179,16 +170,19 @@ public class Movement {
 		}
 	}
 
+	/**
+	* Calls the learning class and generates the actual move for
+	* the reinforment learning ai
+	*/
 	public static void createNewMove(Board board, Tile[] unitsToMove, int race) {
 		Tile[][] nextStates = getPossibleStates(board, unitsToMove, race);
-		// Board boardCopy = Board.deepCloneBoard(board);
 		Tile[] nextState = Learning.Learning(board, unitsToMove, nextStates, race);
 		for (int unitCount = 0; unitCount < unitsToMove.length; unitCount++){
 			Tile movetile = new Tile(unitsToMove[unitCount].xCor, unitsToMove[unitCount].yCor, unitsToMove[unitCount].unit, unitsToMove[unitCount].neighbours);
 			if (Board.gameWon(board) != 0) {
 				return;
 			}
-			moveAiChar(board, movetile, nextState[unitCount]);
+			moveCharacter(board, movetile, nextState[unitCount]);
 		    try {
                 if(drawFrames) Thread.sleep(300);
             } catch(InterruptedException ex) {
@@ -203,6 +197,11 @@ public class Movement {
 		}
 	}
 
+	/**
+	* Gets the list of possible strategies for a given state, if
+	* any given state, if a state if found where a character
+	* can attack, that takes priority over all other moves
+	*/
 	public static Tile[][] getPossibleStates(Board board, Tile[] state, int race) {
 		Tile[][] nextStateList = new Tile[60][state.length];
 		for (int strategyCount = 0; strategyCount < 60; strategyCount++) {
@@ -223,7 +222,10 @@ public class Movement {
 		return nextStateList;
 	}
 
-	// For a list of units, generate their next moves
+	/**
+	* Generates the next state for any given state,
+	* Returns early if it can find a state where it can attack an opponent
+	*/
 	public static Tile[] getNextStates(Board boardCopy, Tile[] state, int race) {
 		Random random = new Random();
 		Tile[] nextStates = new Tile[state.length];
@@ -259,8 +261,12 @@ public class Movement {
 		return nextStates;
 	}
 
+	/**
+	* Generates a move for the player by listening for input
+	*/
 	public static void playerMove(Board board, int race){
-		// list of board locations/characters that need to be moved
+		// generates a list of units/characters that need to be moved based on the
+		// race chosen by the player
 		ArrayList<Tile> charList = new ArrayList<Tile>();
 		for (int j = 0; j<board.xMax+1; j++) {
      		for (int i = 0; i<board.tiles[j].length; i++) {
@@ -277,90 +283,106 @@ public class Movement {
      		}
      	}
      	while(!charList.isEmpty()){
-     		Integer[][][] newdata = boardDrawData(board);
-			f.setContentPane(new drawing.Main(newdata));
-	        f.pack();
-	        f.setVisible(true);
-	     	scan = new Scanner(System.in);
-			int oldXCor = 0;
-			int oldYCor = 0;
-			int newXCor = 0;
-			int newYCor = 0;
-			// Input loop
-			while(true) {
-				try {
-					// Main.printBoard(board);
-					System.out.println("characters to move: ");
-					Set<Tile> charHash = new HashSet<>();
-					charHash.addAll(charList);
-			     	for(Tile charTile : charHash){
-			     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]" + " HP: " + board.tiles[charTile.xCor][charTile.yCor].unit[1]);
-			     	}
-					System.out.println("Please select a character to move.");	
-					String selectUnit = scan.nextLine();
-					oldXCor = Character.getNumericValue(selectUnit.charAt(0));
-					oldYCor = Character.getNumericValue(selectUnit.charAt(2));
-					if (!isExistingTile(oldXCor, oldYCor, charList)) {
-						System.out.println("Not a unit, use x and y coordinates seperated by a ,");
-						continue;
-					}
-					System.out.println("Please select where you want to move it.");
-					System.out.print("possible moves: ");
-					for(Integer[] neighbour : board.tiles[oldXCor][oldYCor].neighbours){
-						System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
-					}
-					System.out.println("");
-					String newPosition = scan.nextLine();
-					newXCor = Character.getNumericValue(newPosition.charAt(0));
-					newYCor = Character.getNumericValue(newPosition.charAt(2));
-					if (!isExistingNeighbour(newXCor, newYCor, board.tiles[oldXCor][oldYCor].neighbours)) {
-						System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
-						continue;
-					}
-					break;
-				} catch(Exception e) {
-					System.out.println("Bad input, please give x and y coordinates seperated by a ,");
-					continue;
-				}
-			}
-			Tile selectedUnit = board.tiles[oldXCor][oldYCor];
-			Tile newPos = board.tiles[newXCor][newYCor];
-
-			moveAiChar(board, selectedUnit, newPos);
-
-			ArrayList<Tile> doublemovecheck = new ArrayList<Tile>();
-			for(int i = 0; i< charList.size(); i++){
-				charList.get(i);
-				// add the left over moves to a temporary arraylist
-				if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
-					doublemovecheck.add(charList.get(i));
-				}
-			}
-			// if more than one move left, change leftover move to new location and remove one move
-			Boolean removeTile = true;
-			if(doublemovecheck.size() > 1) {
-				for(int i = 0; i< charList.size(); i++){
-					if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor && removeTile){
-						charList.remove(charList.get(i));
-						removeTile = false;
-					}
-					if(board.tiles[charList.get(i).xCor][charList.get(i).yCor].unit[0] == 0){
-						if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
-							charList.get(i).xCor = newXCor;
-							charList.get(i).yCor = newYCor;
-						}
-					}
-				}
-			} else if(doublemovecheck.size() == 1) {
-				for(int i = 0; i< charList.size(); i++){
-					if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
-						charList.remove(charList.get(i));
-					}
-				}
-			}
+     		charList = generateNextPlayerMove(board, charList);
 		}
 	}
 
+	/**
+	* Listens for input and updates the given list of characters
+	* Extremely long method, because printing isn't fun :(
+	*/
+	private static ArrayList<Tile> generateNextPlayerMove(Board board, ArrayList<Tile> charList) {
+ 		Integer[][][] newdata = boardDrawData(board);
+		f.setContentPane(new drawing.Main(newdata));
+        f.pack();
+        f.setVisible(true);
+     	scan = new Scanner(System.in);
+		int oldXCor = 0;
+		int oldYCor = 0;
+		int newXCor = 0;
+		int newYCor = 0;
+		// Loops until correct input is found
+		while(true) {
+			try {
+				System.out.println("characters to move: ");
+				Set<Tile> charHash = new HashSet<>();
+				charHash.addAll(charList);
+		     	for(Tile charTile : charHash){
+		     		System.out.println( getUnitName(charTile) + " at " + "["+ charTile.xCor + "," + charTile.yCor + "]" + " HP: " + board.tiles[charTile.xCor][charTile.yCor].unit[1]);
+		     	}
+				System.out.println("Please select a character to move.");	
+				String selectUnit = scan.nextLine();
+				oldXCor = Character.getNumericValue(selectUnit.charAt(0));
+				oldYCor = Character.getNumericValue(selectUnit.charAt(2));
+				if (!isExistingTile(oldXCor, oldYCor, charList)) {
+					System.out.println("Not a unit, use x and y coordinates seperated by a ,");
+					continue;
+				}
+				System.out.println("Please select where you want to move it.");
+				System.out.print("possible moves: ");
+				for(Integer[] neighbour : board.tiles[oldXCor][oldYCor].neighbours){
+					System.out.print("[" + neighbour[0] + "," + neighbour[1] + "] ");
+				}
+				System.out.println(" or stand");
+				String newPosition = scan.nextLine();
+				if (newPosition.equals("stand")) {
+					newXCor = oldXCor;
+					newYCor = oldYCor;
+					break;
+				}
+				newXCor = Character.getNumericValue(newPosition.charAt(0));
+				newYCor = Character.getNumericValue(newPosition.charAt(2));
+				if (!isExistingNeighbour(newXCor, newYCor, board.tiles[oldXCor][oldYCor].neighbours)) {
+					System.out.println("Not an existing tile, use x and y coordinates seperated by a ,");
+					continue;
+				}
+				break;
+			} catch(Exception e) {
+				System.out.println("Bad input, please give x and y coordinates seperated by a ,");
+				continue;
+			}
+		}
+		Tile selectedUnit = board.tiles[oldXCor][oldYCor];
+		Tile newPos = board.tiles[newXCor][newYCor];
+
+		moveCharacter(board, selectedUnit, newPos);
+
+		ArrayList<Tile> doublemovecheck = new ArrayList<Tile>();
+		for(int i = 0; i< charList.size(); i++){
+			charList.get(i);
+			// add the left over moves to a temporary arraylist
+			if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
+				doublemovecheck.add(charList.get(i));
+			}
+		}
+		// if more than one move left, change leftover move to new location and remove one move
+		Boolean removeTile = true;
+		if(doublemovecheck.size() > 1) {
+			for(int i = 0; i< charList.size(); i++){
+				if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor && removeTile){
+					charList.remove(charList.get(i));
+					removeTile = false;
+				}
+				if(board.tiles[charList.get(i).xCor][charList.get(i).yCor].unit[0] == 0){
+					if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
+						charList.get(i).xCor = newXCor;
+						charList.get(i).yCor = newYCor;
+					}
+				}
+			}
+		} else if(doublemovecheck.size() == 1) {
+			for(int i = 0; i< charList.size(); i++){
+				if(charList.get(i).xCor == oldXCor && charList.get(i).yCor == oldYCor){
+					charList.remove(charList.get(i));
+				}
+			}
+		}
+		return charList;
+	}
+
+	/**
+	* Does a given position exist in the board
+	*/
 	private static Boolean isExistingTile(int xCor, int yCor, ArrayList<Tile> tileList) {
 		for (Tile tile : tileList) {
 			if (tile.xCor == xCor && tile.yCor == yCor) {
@@ -370,6 +392,9 @@ public class Movement {
 		return false;
 	}
 
+	/**
+	* Is a given position a neighbour of a tile
+	*/
 	private static Boolean isExistingNeighbour(int xCor, int yCor, ArrayList<Integer[]> neighbourList) {
 		for (Integer[] neighbour: neighbourList) {
 			if (neighbour[0] == xCor && neighbour[1] == yCor) {
@@ -379,14 +404,17 @@ public class Movement {
 		return false;
 	}
 
-	public static String getUnitName(Tile t) {
-		if(t.unit[0] == 1) return("swordsman");
-		if(t.unit[0] == 2) return("general");
-		if(t.unit[0] == 3) return("goblin");
-		if(t.unit[0] == 4) return("orc");
+	public static String getUnitName(Tile tile) {
+		if(tile.unit[0] == 1) return("swordsman");
+		if(tile.unit[0] == 2) return("general");
+		if(tile.unit[0] == 3) return("goblin");
+		if(tile.unit[0] == 4) return("orc");
 		return("empty tile");
 	}
 
+	/**
+	* Draws the board, generates exceptions somtimes for no apparant reason
+	*/
 	public static Integer[][][] boardDrawData(Board board){
         Integer[][][] data = new Integer[9][9][3]; 
         for (int j = 0; j<board.xMax+1; j++) {
